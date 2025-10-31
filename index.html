@@ -1,169 +1,208 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#8B5CF6">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="theme-color" content="#8B5CF6" />
     <title>Unipet</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="src/style.css">
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
     <!-- Header -->
     <div class="header">
-        <div class="logo" >
-            <i class="fa-solid fa-paw"></i>
-            <span>Unipet</span>
-        </div>
+      <div class="logo">
+        <i class="fa-solid fa-paw"></i>
+        <span>Unipet</span>
+      </div>
+    </div>
+
+    <!-- 🦮 Menu de Acessibilidade -->
+    <button
+      id="btnAcessibilidade"
+      class="btn-acessibilidade"
+      aria-label="Abrir menu de acessibilidade"
+    >
+      ♿
+    </button>
+
+    <div id="menuAcessibilidade" class="menu-acessibilidade hidden">
+      <h3>Acessibilidade</h3>
+      <button id="aumentarFonte">Aumentar Fonte</button>
+      <button id="diminuirFonte">Diminuir Fonte</button>
+      <button id="altoContraste">Alto Contraste</button>
+      <button id="resetarAcessibilidade">Resetar</button>
     </div>
 
     <!-- Content -->
     <div class="content">
-        <!-- Home Page -->
-        <div id="page-home" class="page">
-            <div class="welcome">
-                <div class="welcome-icon">🐾</div>
-                <h1>Bem-vindo ao Unipet!</h1>
-                <p>A <strong> Unipet </strong>é uma iniciativa que visa facilitar o processo de adoção de pets na cidade de <strong>Viçosa (MG)</strong> , conectando animais que precisam de um lar a pessoas interessadas em adotar. Nossa plataforma busca ser uma ponte entre <strong>ONG</strong>, protetores independentes e potenciais tutores, tornando o processo de adoção mais ágil e transparente.</p>
+      <!-- Home Page -->
+      <div id="page-home" class="page">
+        <div class="welcome">
+          <div class="welcome-icon">🐾</div>
+          <h1>Bem-vindo ao Unipet!</h1>
+          <p>
+            A <strong> Unipet </strong>é uma iniciativa que visa facilitar o
+            processo de adoção de pets na cidade de
+            <strong>Viçosa (MG)</strong> , conectando animais que precisam de um
+            lar a pessoas interessadas em adotar. Nossa plataforma busca ser uma
+            ponte entre <strong>ONG</strong>, protetores independentes e
+            potenciais tutores, tornando o processo de adoção mais ágil e
+            transparente.
+          </p>
+        </div>
+      </div>
+
+      <!-- Pets Page -->
+      <div id="page-pets" class="page hidden">
+        <h2 class="section-title">
+          <i class="fa-solid fa-dog"></i>
+          Meus Pets
+        </h2>
+
+        <div class="pet-card">
+          <div class="pet-avatar">
+            <img
+              src="https://guiaderodas.com/wp-content/uploads/2020/11/caes-guia-4.png"
+              alt=""
+              srcset=""
+            />
+          </div>
+          <div class="pet-info">
+            <div class="pet-name">Max</div>
+            <div class="pet-details">
+              <span>Pastor Alemão</span>
+              <span>•</span>
+              <span>3 anos</span>
             </div>
+            <span class="pet-badge">Vacinado</span>
+            <span class="pet-badge">Cão-guia</span>
+          </div>
         </div>
 
-        <!-- Pets Page -->
-        <div id="page-pets" class="page hidden">
-            <h2 class="section-title">
-                <i class="fa-solid fa-dog"></i>
-                Meus Pets
-            </h2>
-            
-            <div class="pet-card">
-                <div class="pet-avatar">
-                    <img src="https://guiaderodas.com/wp-content/uploads/2020/11/caes-guia-4.png" alt="" srcset="">
-                    </div>
-                <div class="pet-info">
-                    <div class="pet-name">Max</div>
-                    <div class="pet-details">
-                        <span>Pastor Alemão</span>
-                        <span>•</span>
-                        <span>3 anos</span>
-                    </div>
-                    <span class="pet-badge">Vacinado</span>
-                    <span class="pet-badge">Cão-guia</span>
-                    
-                </div>
+        <div class="pet-card">
+          <div class="pet-avatar">
+            <img
+              src="https://adotar.com.br/upload/2018-01/animais_imagem319180.png?w=700&format=webp"
+              alt=""
+              srcset=""
+            />
+          </div>
+          <div class="pet-info">
+            <div class="pet-name">Luna</div>
+            <div class="pet-details">
+              <span>Persa</span>
+              <span>•</span>
+              <span>2 anos</span>
             </div>
-
-            <div class="pet-card">
-                <div class="pet-avatar">
-                    <img src="https://adotar.com.br/upload/2018-01/animais_imagem319180.png?w=700&format=webp" alt="" srcset="">
-                </div>
-                <div class="pet-info">
-                    <div class="pet-name">Luna</div>
-                    <div class="pet-details">
-                        <span>Persa</span>
-                        <span>•</span>
-                        <span>2 anos</span>
-                    </div>
-                    <span class="pet-badge">Castrada</span>
-                    <span class="pet-badge"> Apoio Emocional (AAE)</span>
-                    
-                </div>
-            </div>
-
-            <div class="pet-card">
-                <div class="pet-avatar">
-                    <img src="https://static.wixstatic.com/media/2c35c9_bd019e7fa7424e948459555266075b2e~mv2.jpeg/v1/fill/w_560,h_318,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Image-empty-state_edited.jpeg" alt="" srcset="">
-                </div>
-                <div class="pet-info">
-                    <div class="pet-name">Bolinha</div>
-                    <div class="pet-details">
-                        <span>Coelho Anão</span>
-                        <span>•</span>
-                        <span>1 ano</span>
-                    </div>
-                    <span class="pet-badge">Saudável</span>
-                </div>
-            </div>
+            <span class="pet-badge">Castrada</span>
+            <span class="pet-badge"> Apoio Emocional (AAE)</span>
+          </div>
         </div>
 
-
-
-        <!-- Profile Page -->
-        <div id="page-profile" class="page hidden">
-            <div class="profile-header">
-                <div class="profile-avatar">
-                    <i class="fa-solid fa-user"></i>
-                </div>
-                <div class="profile-name">Vitor</div>
-                <div class="profile-email">vitor@gmail.com</div>
+        <div class="pet-card">
+          <div class="pet-avatar">
+            <img
+              src="https://static.wixstatic.com/media/2c35c9_bd019e7fa7424e948459555266075b2e~mv2.jpeg/v1/fill/w_560,h_318,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Image-empty-state_edited.jpeg"
+              alt=""
+              srcset=""
+            />
+          </div>
+          <div class="pet-info">
+            <div class="pet-name">Bolinha</div>
+            <div class="pet-details">
+              <span>Coelho Anão</span>
+              <span>•</span>
+              <span>1 ano</span>
             </div>
-
-            <div class="profile-menu">
-                <div class="menu-item">
-                    <div class="menu-icon">
-                        <i class="fa-solid fa-user-pen"></i>
-                    </div>
-                    <div class="menu-text">Editar Perfil</div>
-                    <div class="menu-arrow">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                </div>
-                
-
-                <div class="menu-item">
-                    <div class="menu-icon">
-                        <i class="fa-solid fa-bell"></i>
-                    </div>
-                    <div class="menu-text">Notificações</div>
-                    <div class="menu-arrow">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                </div>
-
-
-
-                <div class="menu-item">
-                    <div class="menu-icon">
-                        <i class="fa-solid fa-gear"></i>
-                    </div>
-                    <div class="menu-text">Configurações</div>
-                    <div class="menu-arrow">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="menu-icon">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                    </div>
-                    <div class="menu-text">Sair</div>
-                    <div class="menu-arrow">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                </div>
-            </div>
+            <span class="pet-badge">Saudável</span>
+          </div>
         </div>
+      </div>
+
+      <!-- Profile Page -->
+      <div id="page-profile" class="page hidden">
+        <div class="profile-header">
+          <div class="profile-avatar">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="profile-name">Vitor</div>
+          <div class="profile-email">vitor@gmail.com</div>
+        </div>
+
+        <div class="profile-menu">
+          <div class="menu-item">
+            <div class="menu-icon">
+              <i class="fa-solid fa-user-pen"></i>
+            </div>
+            <div class="menu-text">Editar Perfil</div>
+            <div class="menu-arrow">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="menu-icon">
+              <i class="fa-solid fa-bell"></i>
+            </div>
+            <div class="menu-text">Notificações</div>
+            <div class="menu-arrow">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="menu-icon">
+              <i class="fa-solid fa-gear"></i>
+            </div>
+            <div class="menu-text">Configurações</div>
+            <div class="menu-arrow">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="menu-icon">
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </div>
+            <div class="menu-text">Sair</div>
+            <div class="menu-arrow">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Footer Navigation -->
     <nav class="footer-nav">
-        <a class="nav-item active" data-page="home">
-            <i class="fa-solid fa-house nav-icon"></i>
-            <span class="nav-label">Início</span>
-        </a>
-        <a class="nav-item" data-page="pets">
-            <i class="fa-solid fa-paw nav-icon"></i>
-            <span class="nav-label">Pets</span>
-        </a>
+      <a class="nav-item active" data-page="home">
+        <i class="fa-solid fa-house nav-icon"></i>
+        <span class="nav-label">Início</span>
+      </a>
+      <a class="nav-item" data-page="pets">
+        <i class="fa-solid fa-paw nav-icon"></i>
+        <span class="nav-label">Pets</span>
+      </a>
 
-        <a class="nav-item" data-page="profile">
-            <i class="fa-solid fa-user nav-icon"></i>
-            <span class="nav-label">Perfil</span>
-        </a>
+      <a class="nav-item" data-page="profile">
+        <i class="fa-solid fa-user nav-icon"></i>
+        <span class="nav-label">Perfil</span>
+      </a>
     </nav>
 
     <script src="src/script.js"></script>
-</body>
+  </body>
 </html>
