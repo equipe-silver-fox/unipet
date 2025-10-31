@@ -55,6 +55,9 @@ async function carregarPets() {
     card.innerHTML = `
       <div class="pet-avatar">
         <img src="${p.imagem}" />
+
+
+        
       </div>
       <div class="pet-info">
         <div class="pet-name">${p.nome}</div>
