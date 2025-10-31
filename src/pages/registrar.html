@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="src/style.css" />
+    <link rel="stylesheet" href="../../public/style.css" />
     <style>
       body {
         background: #23272a;
@@ -73,12 +73,12 @@
 
   <body>
     <div class="logo">
-      <img src="src/img/logo.png" alt="Unipet Logo" />
+      <img src="../img/logo.png" alt="Unipet Logo" />
       <h1>UniPet</h1>
     </div>
 
     <div class="container" style="max-width: 330px">
-      <form>
+      <form action="registrar">
         <div class="mb-3">
           <input type="text" class="form-control" placeholder="Nome" required />
         </div>
@@ -146,6 +146,15 @@
       src="https://kit.fontawesome.com/a2d04f1e56.js"
       crossorigin="anonymous"
     ></script>
-    <script src="src/script.js"></script>
+    <script src="../script.js"></script>
+    <script>
+    const form = document.getElementById("loginForm");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = form.querySelector('input[type="email"]').value;
+      const senha = form.querySelector('input[type="password"]').value;
+      await login(email, senha); // Função definida em script.js
+    });
+  </script>
   </body>
 </html>

@@ -1,7 +1,11 @@
 {
-  "dependencies": {
-    "dotenv": "^17.2.3",
-    "express": "^5.1.0",
-    "next": "^16.0.0"
+  "name": "unipet",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node server/server.js"
+  },
+  "devDependencies": {
+    "json-server": "^1.0.0-beta.3"
   }
 }

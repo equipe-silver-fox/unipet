@@ -78,8 +78,11 @@
           </p>
         </div>
       </div>
+      <div id="page-pets" class="page">
+        <!-- Pets serão carregados dinamicamente -->
+      </div>
 
-      <!-- Pets Page -->
+      <!-- Pets Page 
       <div id="page-pets" class="page hidden">
         <h2 class="section-title">
           <i class="fa-solid fa-dog"></i>
@@ -144,7 +147,7 @@
             <span class="pet-badge">Saudável</span>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Profile Page -->
       <div id="page-profile" class="page hidden">
@@ -218,5 +221,29 @@
     </nav>
 
     <script src="src/script.js"></script>
+    <script>
+      verificarSessao(); // Checa se o usuário está logado
+      carregarPets(); // Carrega pets via API
+
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        logout();
+      });
+
+      // Navegação Footer
+      document.querySelectorAll(".nav-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          document
+            .querySelectorAll(".page")
+            .forEach((p) => p.classList.add("hidden"));
+          const pageId = "page-" + item.getAttribute("data-page");
+          document.getElementById(pageId).classList.remove("hidden");
+
+          document
+            .querySelectorAll(".nav-item")
+            .forEach((i) => i.classList.remove("active"));
+          item.classList.add("active");
+        });
+      });
+    </script>
   </body>
 </html>
