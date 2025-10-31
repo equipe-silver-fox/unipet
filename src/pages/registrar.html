@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Unipet - Login</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="src/style.css" />
+    <style>
+      body {
+        background: #23272a;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .logo {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .logo img {
+        width: 295px;
+        margin-bottom: -110px;
+      }
+
+      .logo h1 {
+        font-weight: 700;
+        font-size: 96px;
+        color: white;
+      }
+
+      .form-control {
+        background-color: #ffffff;
+        border: none;
+        border-radius: 20px;
+        padding: 14px;
+        color: #fff;
+      }
+
+      .form-control::placeholder {
+        color: black;
+      }
+
+      .btn-primary {
+        background-color: #7289da;
+        border: none;
+        border-radius: 25px;
+        padding: 10px 0;
+        font-weight: 600;
+        margin-top: 100px;
+      }
+
+      .text-secondary {
+        color: #7289da !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="logo">
+      <img src="src/img/logo.png" alt="Unipet Logo" />
+      <h1>UniPet</h1>
+    </div>
+
+    <div class="container" style="max-width: 330px">
+      <form>
+        <div class="mb-3">
+          <input type="text" class="form-control" placeholder="Nome" required />
+        </div>
+        <div class="mb-3">
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Email"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Senha"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary w-100 mb-3">
+          CADASTRAR
+        </button>
+      </form>
+
+      <div class="text-center">
+        <p style="color: #bbb">
+          JA POSSUI UMA CONTA?
+          <a href="cadastro.html" class="text-secondary fw-semibold">ENTRAR</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- 🦮 Menu de Acessibilidade -->
+    <button
+      id="btnAcessibilidade"
+      class="btn-acessibilidade"
+      aria-label="Abrir menu de acessibilidade"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-universal-access-circle"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M8 4.143A1.071 1.071 0 1 0 8 2a1.071 1.071 0 0 0 0 2.143m-4.668 1.47 3.24.316v2.5l-.323 4.585A.383.383 0 0 0 7 13.14l.826-4.017c.045-.18.301-.18.346 0L9 13.139a.383.383 0 0 0 .752-.125L9.43 8.43v-2.5l3.239-.316a.38.38 0 0 0-.047-.756H3.379a.38.38 0 0 0-.047.756Z"
+        />
+        <path
+          d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0M1 8a7 7 0 1 1 14 0A7 7 0 0 1 1 8"
+        />
+      </svg>
+    </button>
+
+    <div id="menuAcessibilidade" class="menu-acessibilidade hidden">
+      <h3>Acessibilidade</h3>
+      <button id="aumentarFonte">Aumentar Fonte</button>
+      <button id="diminuirFonte">Diminuir Fonte</button>
+      <button id="altoContraste">Alto Contraste</button>
+      <button id="resetarAcessibilidade">Resetar</button>
+    </div>
+
+    <script
+      src="https://kit.fontawesome.com/a2d04f1e56.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="src/script.js"></script>
+  </body>
+</html>
