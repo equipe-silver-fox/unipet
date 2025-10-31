@@ -18,13 +18,13 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="src/style.css" />
+    <link rel="stylesheet" href="../../public/style.css" />
   </head>
   <body>
     <!-- Header -->
     <div class="header">
       <div class="logo">
-        <img src="src/img/logo.png" />
+        <img src="../../public/img/logo.png" />
         <span>Unipet</span>
       </div>
     </div>
@@ -78,11 +78,8 @@
           </p>
         </div>
       </div>
-      <div id="page-pets" class="page">
-        <!-- Pets serão carregados dinamicamente -->
-      </div>
 
-      <!-- Pets Page 
+      <!-- Pets Page -->
       <div id="page-pets" class="page hidden">
         <h2 class="section-title">
           <i class="fa-solid fa-dog"></i>
@@ -147,7 +144,7 @@
             <span class="pet-badge">Saudável</span>
           </div>
         </div>
-      </div> -->
+      </div>
 
       <!-- Profile Page -->
       <div id="page-profile" class="page hidden">
@@ -165,26 +162,6 @@
               <i class="fa-solid fa-user-pen"></i>
             </div>
             <div class="menu-text">Editar Perfil</div>
-            <div class="menu-arrow">
-              <i class="fa-solid fa-chevron-right"></i>
-            </div>
-          </div>
-
-          <div class="menu-item">
-            <div class="menu-icon">
-              <i class="fa-solid fa-bell"></i>
-            </div>
-            <div class="menu-text">Notificações</div>
-            <div class="menu-arrow">
-              <i class="fa-solid fa-chevron-right"></i>
-            </div>
-          </div>
-
-          <div class="menu-item">
-            <div class="menu-icon">
-              <i class="fa-solid fa-gear"></i>
-            </div>
-            <div class="menu-text">Configurações</div>
             <div class="menu-arrow">
               <i class="fa-solid fa-chevron-right"></i>
             </div>
@@ -220,29 +197,64 @@
       </a>
     </nav>
 
-    <script src="src/script.js"></script>
+    <script src="../script.js"></script>
     <script>
-      verificarSessao(); // Checa se o usuário está logado
-      carregarPets(); // Carrega pets via API
+      // Seleciona os itens do menu
+      const menuItems = document.querySelectorAll(".profile-menu .menu-item");
 
-      document.getElementById("logoutBtn").addEventListener("click", () => {
-        logout();
+      // Atribuindo cada botão
+      const editarPerfilBtn = menuItems[0];
+      const sairBtn = menuItems[1];
+      const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+      if (usuario) {
+        document.querySelector(".profile-name").textContent = usuario.nome;
+        document.querySelector(".profile-email").textContent = usuario.email;
+      } else {
+        // Redireciona se não estiver logado
+        window.location.href = "loguin.html";
+      }
+      editarPerfilBtn.addEventListener("click", async () => {
+        if (!usuario) return;
+
+        const novoNome = prompt("Digite seu novo nome:", usuario.nome);
+        const novoEmail = prompt("Digite seu novo email:", usuario.email);
+
+        if (!novoNome || !novoEmail) {
+          return alert("Nome e email são obrigatórios!");
+        }
+
+        // Atualiza no objeto local
+        usuario.nome = novoNome;
+        usuario.email = novoEmail;
+        localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+
+        // Atualiza na interface
+        document.querySelector(".profile-name").textContent = usuario.nome;
+        document.querySelector(".profile-email").textContent = usuario.email;
+
+        // Atualiza no backend (assumindo rota PUT /usuarios/:id)
+        try {
+          const res = await fetch(
+            `http://localhost:3000/usuarios/${usuario.id}`,
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(usuario),
+            }
+          );
+
+          if (!res.ok) throw new Error("Erro ao atualizar usuário no servidor");
+
+          alert("Perfil atualizado com sucesso!");
+        } catch (err) {
+          console.error(err);
+          alert("Não foi possível atualizar o perfil no servidor.");
+        }
       });
-
-      // Navegação Footer
-      document.querySelectorAll(".nav-item").forEach((item) => {
-        item.addEventListener("click", () => {
-          document
-            .querySelectorAll(".page")
-            .forEach((p) => p.classList.add("hidden"));
-          const pageId = "page-" + item.getAttribute("data-page");
-          document.getElementById(pageId).classList.remove("hidden");
-
-          document
-            .querySelectorAll(".nav-item")
-            .forEach((i) => i.classList.remove("active"));
-          item.classList.add("active");
-        });
+      sairBtn.addEventListener("click", () => {
+        localStorage.removeItem("usuarioLogado");
+        window.location.href = "loguin.html";
       });
     </script>
   </body>

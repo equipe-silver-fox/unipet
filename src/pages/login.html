@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="../../public/style.css" />
     <style>
       body {
-        background: #23272A;
+        background: #23272a;
         color: white;
         display: flex;
         flex-direction: column;
@@ -34,11 +34,11 @@
       }
 
       .logo img {
-          width: 295px;
-          margin-bottom: -110px;
-    }
-    
-    .logo h1 {
+        width: 295px;
+        margin-bottom: -110px;
+      }
+
+      .logo h1 {
         font-weight: 700;
         font-size: 96px;
         color: white;
@@ -50,7 +50,6 @@
         border-radius: 20px;
         padding: 14px;
         color: #fff;
-
       }
 
       .form-control::placeholder {
@@ -58,7 +57,7 @@
       }
 
       .btn-primary {
-        background-color: #7289DA;
+        background-color: #7289da;
         border: none;
         border-radius: 25px;
         padding: 10px 0;
@@ -67,7 +66,7 @@
       }
 
       .text-secondary {
-        color: #7289DA !important;
+        color: #7289da !important;
       }
 
       .acessibilidade {
@@ -83,25 +82,37 @@
       <h1>UniPet</h1>
     </div>
 
-    <div class="container" style="max-width: 330px;">
-      <form>
+    <div class="container" style="max-width: 330px">
+      <form id="loginForm">
         <div class="mb-3">
-          <input type="email" class="form-control" placeholder="Email" required />
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Email"
+            required
+          />
         </div>
         <div class="mb-3">
-          <input type="password" class="form-control" placeholder="Senha" required />
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Senha"
+            required
+          />
         </div>
         <button type="submit" class="btn btn-primary w-100 mb-3">ENTRAR</button>
       </form>
 
       <div class="text-center">
-        <p style="color: #bbb;">
+        <p style="color: #bbb">
           NÃO POSSUI UMA CONTA?
-          <a href="cadastro.html" class="text-secondary fw-semibold">CADASTRE-SE</a>
+          <a href="registrar.html" class="text-secondary fw-semibold"
+            >CADASTRE-SE</a
+          >
         </p>
       </div>
     </div>
- <!-- 🦮 Menu de Acessibilidade -->
+    <!-- 🦮 Menu de Acessibilidade -->
     <button
       id="btnAcessibilidade"
       class="btn-acessibilidade"
@@ -132,8 +143,44 @@
       <button id="resetarAcessibilidade">Resetar</button>
     </div>
 
-    <script src="https://kit.fontawesome.com/a2d04f1e56.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/a2d04f1e56.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="../script.js"></script>
-</body>
+    <script>
+      const API_URL = "http://localhost:3000"; // URL do seu backend
+      const loginForm = document.getElementById("loginForm");
 
+      loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = loginForm.querySelector('input[type="email"]').value;
+        const senha = loginForm.querySelector('input[type="password"]').value;
+
+        try {
+          const res = await fetch(`${API_URL}/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, senha }),
+          });
+
+          if (!res.ok) {
+            const erro = await res.json();
+            alert(erro.erro || "Email ou senha inválidos!");
+            return;
+          }
+
+          const usuario = await res.json();
+          localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+
+          // Redireciona para index.html
+          window.location.href = "index.html";
+        } catch (err) {
+          console.error(err);
+          alert("Erro na conexão com o servidor.");
+        }
+      });
+    </script>
+  </body>
 </html>

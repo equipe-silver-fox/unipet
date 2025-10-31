@@ -1,0 +1,11 @@
+{
+  "pets": [
+    {
+      "id": 1,
+      "nome": "Rex",
+      "tipo": "Cachorro",
+      "idade": 3,
+      "imagem": "public/img/rex.png"
+    }
+  ]
+}

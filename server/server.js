@@ -1,120 +1,89 @@
-import jsonServer from "json-server";
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
 import fs from "fs";
+import path from "path";
 
-const API_URL = "http://localhost:3000";
-const usuariosURL = `${API_URL}/usuarios`;
-const petsURL = `${API_URL}/pets`;
+const app = express();
+const PORT = 3000;
 
-// Função de login
-async function login(email, senha) {
-  const res = await fetch(usuariosURL);
-  const usuarios = await res.json();
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.static(path.join(process.cwd(), "public")));
+
+const dbPath = path.join(process.cwd(), "server", "db");
+
+const lerJSON = (arquivo) => {
+  const caminho = path.join(dbPath, arquivo);
+  return JSON.parse(fs.readFileSync(caminho, "utf-8"));
+};
+
+const escreverJSON = (arquivo, data) => {
+  const caminho = path.join(dbPath, arquivo);
+  fs.writeFileSync(caminho, JSON.stringify(data, null, 2), "utf-8");
+};
+
+// --------------------- USUÁRIOS ---------------------
+
+app.get("/usuarios", (req, res) => {
+  const usuarios = lerJSON("usuarios.json").usuarios;
+  res.json(usuarios);
+});
+
+app.post("/usuarios", (req, res) => {
+  const { nome, email, senha } = req.body;
+  const db = lerJSON("usuarios.json");
+
+  if (db.usuarios.find(u => u.email === email)) {
+    return res.status(400).json({ erro: "Email já cadastrado" });
+  }
+
+  const novoUsuario = { id: Date.now(), nome, email, senha };
+  db.usuarios.push(novoUsuario);
+  escreverJSON("usuarios.json", db);
+  res.status(201).json(novoUsuario);
+});
+
+app.post("/login", (req, res) => {
+  const { email, senha } = req.body;
+  const usuarios = lerJSON("usuarios.json").usuarios;
   const user = usuarios.find(u => u.email === email && u.senha === senha);
-  if (user) {
-    localStorage.setItem("usuarioLogado", JSON.stringify(user));
-    window.location.href = "index.html";
-  } else {
-    alert("Email ou senha inválidos!");
-  }
-}
 
-// Função de registro
-async function registrar(nome, email, senha) {
-  const res = await fetch(usuariosURL);
-  const usuarios = await res.json();
-  const existe = usuarios.find(u => u.email === email);
-  if (existe) {
-    alert("Email já cadastrado!");
-    return;
-  }
-  const novoUsuario = { nome, email, senha };
-  await fetch(usuariosURL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(novoUsuario)
-  });
-  alert("Cadastro realizado com sucesso!");
-  window.location.href = "loguin.html";
-}
+  if (!user) return res.status(401).json({ erro: "Email ou senha inválidos" });
+  res.json(user);
+});
 
-// Logout
-function logout() {
-  localStorage.removeItem("usuarioLogado");
-  window.location.href = "loguin.html";
-}
+app.put("/usuarios/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const db = lerJSON("usuarios.json");
+  const index = db.usuarios.findIndex(u => u.id === id);
 
-// Carregar pets dinamicamente
-async function carregarPets() {
-  const res = await fetch(petsURL);
-  const pets = await res.json();
-  const container = document.querySelector("#page-pets");
-  container.innerHTML = `<h2 class="section-title"><i class="fa-solid fa-dog"></i> Nossos Pets</h2>`;
-  pets.forEach(p => {
-    const card = document.createElement("div");
-    card.classList.add("pet-card");
-    card.innerHTML = `
-      <div class="pet-avatar">
-        <img src="${p.imagem}" />
+  if (index === -1) return res.status(404).json({ erro: "Usuário não encontrado" });
 
+  db.usuarios[index] = { ...db.usuarios[index], ...req.body };
+  escreverJSON("usuarios.json", db);
 
-        
-      </div>
-      <div class="pet-info">
-        <div class="pet-name">${p.nome}</div>
-        <div class="pet-details">
-          <span>${p.tipo}</span> • <span>${p.idade} anos</span>
-        </div>
-      </div>`;
-    container.appendChild(card);
-  });
-}
+  res.json(db.usuarios[index]);
+});
 
-// Verificar sessão
-function verificarSessao() {
-  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-  if (!usuario) {
-    if (!window.location.href.includes("loguin") && !window.location.href.includes("registrar")) {
-      window.location.href = "loguin.html";
-    }
-  } else {
-    // Preencher dados do perfil
-    const nomeEl = document.querySelector(".profile-name");
-    const emailEl = document.querySelector(".profile-email");
-    if (nomeEl) nomeEl.textContent = usuario.nome;
-    if (emailEl) emailEl.textContent = usuario.email;
-  }
-}
+// --------------------- PETS ---------------------
 
-// Executar funções automaticamente no index
-if (window.location.href.includes("index.html")) {
-  verificarSessao();
-  carregarPets();
-}
+app.get("/pets", (req, res) => {
+  const pets = lerJSON("pets.json").pets;
+  res.json(pets);
+});
 
-// Executar logout
-const logoutBtn = document.querySelector(".fa-right-from-bracket");
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", logout);
-}
+app.post("/pets", (req, res) => {
+  const { nome, tipo, idade, imagem } = req.body;
+  const db = lerJSON("pets.json");
+  const novoPet = { id: Date.now(), nome, tipo, idade, imagem };
+  db.pets.push(novoPet);
+  escreverJSON("pets.json", db);
+  res.status(201).json(novoPet);
+});
 
-// Formulários
-const loginForm = document.querySelector("form[action='login']");
-if (loginForm) {
-  loginForm.addEventListener("submit", e => {
-    e.preventDefault();
-    const email = loginForm.querySelector('input[type="email"]').value;
-    const senha = loginForm.querySelector('input[type="password"]').value;
-    login(email, senha);
-  });
-}
+// --------------------- SERVIDOR ---------------------
 
-const registrarForm = document.querySelector("form[action='registrar']");
-if (registrarForm) {
-  registrarForm.addEventListener("submit", e => {
-    e.preventDefault();
-    const nome = registrarForm.querySelector('input[placeholder="Nome"]').value;
-    const email = registrarForm.querySelector('input[type="email"]').value;
-    const senha = registrarForm.querySelector('input[type="password"]').value;
-    registrar(nome, email, senha);
-  });
-}
+app.listen(PORT, () => {
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
+});

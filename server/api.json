@@ -1,5 +1,0 @@
-{
-  "pets": [
-    { "id": 1, "nome": "Rex", "tipo": "Cachorro" }
-  ]
-}

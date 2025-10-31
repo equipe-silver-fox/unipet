@@ -78,7 +78,7 @@
     </div>
 
     <div class="container" style="max-width: 330px">
-      <form action="registrar">
+      <form id="registroForm">
         <div class="mb-3">
           <input type="text" class="form-control" placeholder="Nome" required />
         </div>
@@ -106,7 +106,7 @@
       <div class="text-center">
         <p style="color: #bbb">
           JA POSSUI UMA CONTA?
-          <a href="cadastro.html" class="text-secondary fw-semibold">ENTRAR</a>
+          <a href="login.html" class="text-secondary fw-semibold">ENTRAR</a>
         </p>
       </div>
     </div>
@@ -148,13 +148,41 @@
     ></script>
     <script src="../script.js"></script>
     <script>
-    const form = document.getElementById("loginForm");
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const email = form.querySelector('input[type="email"]').value;
-      const senha = form.querySelector('input[type="password"]').value;
-      await login(email, senha); // Função definida em script.js
-    });
-  </script>
+      const API_URL = "http://localhost:3000"; // URL do seu backend
+      const registroForm = document.getElementById("registroForm");
+
+      registroForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const nome = registroForm.querySelector(
+          'input[placeholder="Nome"]'
+        ).value;
+        const email = registroForm.querySelector('input[type="email"]').value;
+        const senha = registroForm.querySelector(
+          'input[type="password"]'
+        ).value;
+
+        try {
+          const res = await fetch(`${API_URL}/usuarios`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nome, email, senha }),
+          });
+
+          if (!res.ok) {
+            const erro = await res.json();
+            alert(erro.erro || "Erro ao cadastrar!");
+            return;
+          }
+
+          const usuario = await res.json();
+          alert(`Cadastro realizado com sucesso! Bem-vindo, ${usuario.nome}`);
+          window.location.href = "loguin.html"; // redireciona para login
+        } catch (err) {
+          console.error(err);
+          alert("Erro na conexão com o servidor.");
+        }
+      });
+    </script>
   </body>
 </html>
