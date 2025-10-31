@@ -35,7 +35,7 @@ async function registrar(nome, email, senha) {
     }
 
     alert("Cadastro realizado com sucesso!");
-    window.location.href = "loguin.html";
+    window.location.href = "login.html";
   } catch (err) {
     alert(err.message);
   }
@@ -45,8 +45,8 @@ async function registrar(nome, email, senha) {
 function verificarSessao() {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
   if (!usuario) {
-    if (!window.location.href.includes("loguin") && !window.location.href.includes("registrar")) {
-      window.location.href = "loguin.html";
+    if (!window.location.href.includes("login") && !window.location.href.includes("registrar")) {
+      window.location.href = "login.html";
     }
   } else {
     const nomeEl = document.querySelector(".profile-name");
@@ -59,7 +59,7 @@ function verificarSessao() {
 // --------------------- LOGOUT ---------------------
 function logout() {
   localStorage.removeItem("usuarioLogado");
-  window.location.href = "loguin.html";
+  window.location.href = "login.html";
 }
 
 // --------------------- EDITAR PERFIL ---------------------
@@ -143,6 +143,9 @@ btnAumentar?.addEventListener("click", () => { tamanhoFonte += 10; document.body
 btnDiminuir?.addEventListener("click", () => { if (tamanhoFonte > 60) { tamanhoFonte -= 10; document.body.style.fontSize = tamanhoFonte + "%"; } });
 btnContraste?.addEventListener("click", () => document.body.classList.toggle("alto-contraste"));
 btnReset?.addEventListener("click", () => { tamanhoFonte = 100; document.body.style.fontSize = "100%"; document.body.classList.remove("alto-contraste"); });
+
+const sairBtn = document.querySelector('.menu-item[data-action="sair"]');
+sairBtn?.addEventListener("click", logout);
 
 // --------------------- EXECUTAR AO CARREGAR ---------------------
 window.addEventListener("DOMContentLoaded", () => {

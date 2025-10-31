@@ -281,6 +281,7 @@ body.alto-contraste .nav-label {
   gap: 16px;
   border-bottom: 1px solid #f3f4f6;
   transition: background 0.2s;
+  cursor: pointer;
 }
 
 .menu-item:last-child {
@@ -289,6 +290,7 @@ body.alto-contraste .nav-label {
 
 .menu-item:active {
   background: #f9fafb;
+
 }
 
 .menu-icon {

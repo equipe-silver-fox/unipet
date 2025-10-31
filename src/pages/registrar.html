@@ -19,7 +19,7 @@
     <style>
       body {
         background: #23272a;
-        color: white;
+        color: rgb(0, 0, 0);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -27,17 +27,14 @@
         height: 100vh;
         font-family: "Poppins", sans-serif;
       }
-
       .logo {
         text-align: center;
         margin-bottom: 30px;
       }
-
       .logo img {
         width: 295px;
         margin-bottom: -110px;
       }
-
       .logo h1 {
         font-weight: 700;
         font-size: 96px;
@@ -45,15 +42,15 @@
       }
 
       .form-control {
-        background-color: #ffffff;
+        background-color: #ffffff; /* fundo escuro do input */
         border: none;
         border-radius: 20px;
         padding: 14px;
-        color: #fff;
+        color: #000000; /* texto digitado branco */
       }
 
-      .form-control::placeholder {
-        color: black;
+    .form-control::placeholder {
+        color: #aaaaaa; /* placeholder cinza claro */
       }
 
       .btn-primary {
@@ -73,7 +70,7 @@
 
   <body>
     <div class="logo">
-      <img src="../img/logo.png" alt="Unipet Logo" />
+      <img src="../../public/img/logo.png" alt="Unipet Logo" />
       <h1>UniPet</h1>
     </div>
 

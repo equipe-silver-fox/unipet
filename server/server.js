@@ -44,14 +44,15 @@ app.post("/usuarios", (req, res) => {
   res.status(201).json(novoUsuario);
 });
 
+// Rota de login ajustada
 app.post("/login", (req, res) => {
-  const { email, senha } = req.body;
+  const { nome, senha } = req.body;
   const usuarios = lerJSON("usuarios.json").usuarios;
-  const user = usuarios.find(u => u.email === email && u.senha === senha);
-
-  if (!user) return res.status(401).json({ erro: "Email ou senha inválidos" });
+  const user = usuarios.find(u => u.nome === nome && u.senha === senha);
+  if (!user) return res.status(401).json({ erro: "Nome ou senha inválidos" });
   res.json(user);
 });
+
 
 app.put("/usuarios/:id", (req, res) => {
   const id = parseInt(req.params.id);

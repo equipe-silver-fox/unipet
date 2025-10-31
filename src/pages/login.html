@@ -49,7 +49,7 @@
         border: none;
         border-radius: 20px;
         padding: 14px;
-        color: #fff;
+        color: #050505;
       }
 
       .form-control::placeholder {
@@ -78,19 +78,14 @@
 
   <body>
     <div class="logo">
-      <img src="../img/logo.png" alt="Unipet Logo" />
+      <img src="../../public/img/logo.png" alt="Unipet Logo" />
       <h1>UniPet</h1>
     </div>
 
     <div class="container" style="max-width: 330px">
       <form id="loginForm">
         <div class="mb-3">
-          <input
-            type="email"
-            class="form-control"
-            placeholder="Email"
-            required
-          />
+          <input type="text" class="form-control" placeholder="Nome" required />
         </div>
         <div class="mb-3">
           <input
@@ -155,14 +150,14 @@
       loginForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const email = loginForm.querySelector('input[type="email"]').value;
+        const nome = loginForm.querySelector('input[type="text"]').value; // tipo text para nome
         const senha = loginForm.querySelector('input[type="password"]').value;
 
         try {
           const res = await fetch(`${API_URL}/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, senha }),
+            body: JSON.stringify({ nome, senha }),
           });
 
           if (!res.ok) {

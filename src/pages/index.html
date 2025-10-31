@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <!-- 🦮 Menu de Acessibilidade -->
+    <!-- Menu de Acessibilidade -->
     <button
       id="btnAcessibilidade"
       class="btn-acessibilidade"
@@ -68,83 +68,15 @@
           <div class="welcome-icon">🐾</div>
           <h1>Bem-vindo ao Unipet!</h1>
           <p>
-            A <strong> Unipet </strong>é uma iniciativa que visa facilitar o
-            processo de adoção de pets na cidade de
-            <strong>Viçosa (MG)</strong> , conectando animais que precisam de um
-            lar a pessoas interessadas em adotar. Nossa plataforma busca ser uma
-            ponte entre <strong>ONG</strong>, protetores independentes e
-            potenciais tutores, tornando o processo de adoção mais ágil e
+            A <strong>Unipet</strong> conecta animais que precisam de um lar a
+            pessoas interessadas em adotar, tornando o processo mais ágil e
             transparente.
           </p>
         </div>
       </div>
 
       <!-- Pets Page -->
-      <div id="page-pets" class="page hidden">
-        <h2 class="section-title">
-          <i class="fa-solid fa-dog"></i>
-          Nossos Pets
-        </h2>
-
-        <div class="pet-card">
-          <div class="pet-avatar">
-            <img
-              src="https://guiaderodas.com/wp-content/uploads/2020/11/caes-guia-4.png"
-              alt=""
-              srcset=""
-            />
-          </div>
-          <div class="pet-info">
-            <div class="pet-name">Max</div>
-            <div class="pet-details">
-              <span>Pastor Alemão</span>
-              <span>•</span>
-              <span>3 anos</span>
-            </div>
-            <span class="pet-badge">Vacinado</span>
-            <span class="pet-badge">Cão-guia</span>
-          </div>
-        </div>
-
-        <div class="pet-card">
-          <div class="pet-avatar">
-            <img
-              src="https://adotar.com.br/upload/2018-01/animais_imagem319180.png?w=700&format=webp"
-              alt=""
-              srcset=""
-            />
-          </div>
-          <div class="pet-info">
-            <div class="pet-name">Luna</div>
-            <div class="pet-details">
-              <span>Persa</span>
-              <span>•</span>
-              <span>2 anos</span>
-            </div>
-            <span class="pet-badge">Castrada</span>
-            <span class="pet-badge"> Apoio Emocional (AAE)</span>
-          </div>
-        </div>
-
-        <div class="pet-card">
-          <div class="pet-avatar">
-            <img
-              src="https://static.wixstatic.com/media/2c35c9_bd019e7fa7424e948459555266075b2e~mv2.jpeg/v1/fill/w_560,h_318,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Image-empty-state_edited.jpeg"
-              alt=""
-              srcset=""
-            />
-          </div>
-          <div class="pet-info">
-            <div class="pet-name">Bolinha</div>
-            <div class="pet-details">
-              <span>Coelho Anão</span>
-              <span>•</span>
-              <span>1 ano</span>
-            </div>
-            <span class="pet-badge">Saudável</span>
-          </div>
-        </div>
-      </div>
+      <div id="page-pets" class="page hidden"></div>
 
       <!-- Profile Page -->
       <div id="page-profile" class="page hidden">
@@ -152,8 +84,8 @@
           <div class="profile-avatar">
             <i class="fa-solid fa-user"></i>
           </div>
-          <div class="profile-name">Vitor</div>
-          <div class="profile-email">vitor@gmail.com</div>
+          <div class="profile-name"></div>
+          <div class="profile-email"></div>
         </div>
 
         <div class="profile-menu">
@@ -167,7 +99,7 @@
             </div>
           </div>
 
-          <div class="menu-item">
+          <div class="menu-item" data-action="sair">
             <div class="menu-icon">
               <i class="fa-solid fa-right-from-bracket"></i>
             </div>
@@ -190,72 +122,93 @@
         <i class="fa-solid fa-paw nav-icon"></i>
         <span class="nav-label">Pets</span>
       </a>
-
       <a class="nav-item" data-page="profile">
         <i class="fa-solid fa-user nav-icon"></i>
         <span class="nav-label">Perfil</span>
       </a>
     </nav>
 
-    <script src="../script.js"></script>
+    <script src="../../public/script.js"></script>
     <script>
-      // Seleciona os itens do menu
-      const menuItems = document.querySelectorAll(".profile-menu .menu-item");
-
-      // Atribuindo cada botão
-      const editarPerfilBtn = menuItems[0];
-      const sairBtn = menuItems[1];
+      const API_URL = "http://localhost:3000";
       const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-      if (usuario) {
+      if (!usuario) {
+        window.location.href = "loguin.html";
+      } else {
         document.querySelector(".profile-name").textContent = usuario.nome;
         document.querySelector(".profile-email").textContent = usuario.email;
-      } else {
-        // Redireciona se não estiver logado
-        window.location.href = "loguin.html";
       }
-      editarPerfilBtn.addEventListener("click", async () => {
-        if (!usuario) return;
 
+      // Menu inferior
+      const navItems = document.querySelectorAll(".nav-item");
+      const pages = document.querySelectorAll(".page");
+      navItems.forEach((item) => {
+        item.addEventListener("click", function () {
+          navItems.forEach((nav) => nav.classList.remove("active"));
+          this.classList.add("active");
+          pages.forEach((p) => p.classList.add("hidden"));
+          const pageName = this.getAttribute("data-page");
+          document
+            .getElementById(`page-${pageName}`)
+            .classList.remove("hidden");
+        });
+      });
+
+      // Perfil
+      const [editarPerfilBtn, sairBtn] = document.querySelectorAll(
+        ".profile-menu .menu-item"
+      );
+
+      editarPerfilBtn.addEventListener("click", async () => {
         const novoNome = prompt("Digite seu novo nome:", usuario.nome);
         const novoEmail = prompt("Digite seu novo email:", usuario.email);
-
-        if (!novoNome || !novoEmail) {
-          return alert("Nome e email são obrigatórios!");
-        }
-
-        // Atualiza no objeto local
+        if (!novoNome || !novoEmail) return alert("Nome e email obrigatórios!");
         usuario.nome = novoNome;
         usuario.email = novoEmail;
         localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+        document.querySelector(".profile-name").textContent = novoNome;
+        document.querySelector(".profile-email").textContent = novoEmail;
 
-        // Atualiza na interface
-        document.querySelector(".profile-name").textContent = usuario.nome;
-        document.querySelector(".profile-email").textContent = usuario.email;
-
-        // Atualiza no backend (assumindo rota PUT /usuarios/:id)
         try {
-          const res = await fetch(
-            `http://localhost:3000/usuarios/${usuario.id}`,
-            {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(usuario),
-            }
-          );
-
-          if (!res.ok) throw new Error("Erro ao atualizar usuário no servidor");
-
+          const res = await fetch(`${API_URL}/usuarios/${usuario.id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(usuario),
+          });
+          if (!res.ok) throw new Error();
           alert("Perfil atualizado com sucesso!");
-        } catch (err) {
-          console.error(err);
+        } catch {
           alert("Não foi possível atualizar o perfil no servidor.");
         }
       });
+
       sairBtn.addEventListener("click", () => {
         localStorage.removeItem("usuarioLogado");
         window.location.href = "loguin.html";
       });
+
+      // Pets
+      async function carregarPets() {
+        const res = await fetch(`${API_URL}/pets`);
+        const pets = await res.json();
+        const container = document.getElementById("page-pets");
+        container.innerHTML = `<h2 class="section-title"><i class="fa-solid fa-dog"></i> Nossos Pets</h2>`;
+        pets.forEach((p) => {
+          const card = document.createElement("div");
+          card.className = "pet-card";
+          card.innerHTML = `
+            <div class="pet-avatar"><img src="${p.imagem}" /></div>
+            <div class="pet-info">
+              <div class="pet-name">${p.nome}</div>
+              <div class="pet-details"><span>${p.tipo}</span> • <span>${
+            p.idade || "?"
+          } anos</span></div>
+            </div>`;
+          container.appendChild(card);
+        });
+      }
+      carregarPets();
     </script>
   </body>
 </html>
