@@ -112,89 +112,21 @@
         <button id="btnAddPetProfile" class="btn-add-pet-profile">
           <i class="fa-solid fa-plus"></i> Adicionar Pet
         </button>
-        <!-- Modal para adicionar pet -->
         <div id="modalAddPetProfile" class="modal hidden">
           <div class="modal-content">
-            <h3><i class="fa-solid fa-paw"></i> Adicionar Novo Pet</h3>
+            <h3>Adicionar Novo Pet</h3>
             <form id="formAddPetProfile">
-              <div class="file-input-container">
-                <label class="file-input-label" for="petImage">
-                  <input type="file" id="petImage" accept="image/*" required />
-                  <span>
-                    <i class="fa-solid fa-camera"></i>
-                    <strong>Adicionar foto do pet</strong>
-                    <small>Clique para escolher uma imagem</small>
-                  </span>
-                </label>
-                <div id="imagePreview" class="image-preview"></div>
-              </div>
-
-              <div class="form-group">
-                <label for="petTag">
-                  <i class="fa-solid fa-tag"></i> Tag/Identificação
-                </label>
-                <input
-                  type="text"
-                  id="petTag"
-                  placeholder="Ex: Cachorro fofo, Gato carinhoso"
-                  required
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="petDescricao">
-                  <i class="fa-solid fa-align-left"></i> Descrição
-                </label>
-                <textarea
-                  id="petDescricao"
-                  placeholder="Conte sobre a personalidade e características do pet..."
-                  required
-                ></textarea>
-              </div>
-
-              <div class="form-group">
-                <label for="petRaca">
-                  <i class="fa-solid fa-dog"></i> Raça
-                </label>
-                <input
-                  type="text"
-                  id="petRaca"
-                  placeholder="Ex: Vira-lata, Labrador, Persa"
-                  required
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="petLocal">
-                  <i class="fa-solid fa-location-dot"></i> Local
-                </label>
-                <input
-                  type="text"
-                  id="petLocal"
-                  placeholder="Ex: São Paulo - SP, Rio de Janeiro - RJ"
-                  required
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="petContato">
-                  <i class="fa-solid fa-phone"></i> Contato
-                </label>
-                <input
-                  type="text"
-                  id="petContato"
-                  placeholder="Ex: (11) 99999-9999, email@exemplo.com"
-                  required
-                />
-              </div>
-
+              <input type="url" placeholder="URL da Imagem" required />
+              <input type="text" placeholder="Descrição" required />
+              <input
+                type="text"
+                placeholder="Tags (separadas por vírgula)"
+                required
+              />
+              <input type="text" placeholder="Contato" required />
               <div class="modal-buttons">
-                <button type="submit">
-                  <i class="fa-solid fa-check"></i> Adicionar
-                </button>
-                <button type="button" id="btnCancelPetProfile">
-                  <i class="fa-solid fa-times"></i> Cancelar
-                </button>
+                <button type="submit">Adicionar</button>
+                <button type="button" id="btnCancelPetProfile">Cancelar</button>
               </div>
             </form>
           </div>
@@ -302,6 +234,55 @@
       }
       carregarPets();
     </script>
-    <script src="../../server/pet.js"></script>
+    <script>
+      // Seletores
+      const btnAddPetProfile = document.getElementById("btnAddPetProfile");
+      const modalAddPetProfile = document.getElementById("modalAddPetProfile");
+      const btnCancelPetProfile = document.getElementById(
+        "btnCancelPetProfile"
+      );
+      const formAddPetProfile = document.getElementById("formAddPetProfile");
+
+      // Mostrar modal
+      btnAddPetProfile.addEventListener("click", () =>
+        modalAddPetProfile.classList.remove("hidden")
+      );
+
+      // Cancelar
+      btnCancelPetProfile.addEventListener("click", () =>
+        modalAddPetProfile.classList.add("hidden")
+      );
+
+      // Submissão do form
+      formAddPetProfile.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const [imagem, descricao, tags, contato] = Array.from(
+          formAddPetProfile.querySelectorAll("input")
+        ).map((i) => i.value);
+
+        const novoPet = {
+          imagem,
+          descricao,
+          tags: tags.split(",").map((t) => t.trim()),
+          contato,
+        };
+
+        try {
+          const res = await fetch(`${API_URL}/pets`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(novoPet),
+          });
+
+          if (!res.ok) throw new Error("Erro ao adicionar pet");
+
+          alert("Pet adicionado com sucesso!");
+          modalAddPetProfile.classList.add("hidden");
+          formAddPetProfile.reset();
+        } catch (err) {
+          alert(err.message);
+        }
+      });
+    </script>
   </body>
 </html>
