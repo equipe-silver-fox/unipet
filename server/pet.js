@@ -45,11 +45,17 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
 
     const formData = {
-      nome: document.getElementById('petTag').value,            // Nome do pet
-      tipo: document.getElementById('petRaca')?.value || "",  // Tipo/raça
-      idade: parseInt(document.getElementById('petIdade')?.value) || 0,
-      imagem: imagePreview.querySelector('img')?.src || '',   // Imagem em base64
+      nome: document.getElementById('petTag').value,
+      tipo: document.getElementById('petTipo').value,
+      idade: parseInt(document.getElementById('petIdade').value) || 0,
+      descricao: document.getElementById('petDescricao').value,
+      raca: document.getElementById('petRaca').value,
+      local: document.getElementById('petLocal').value,
+      contato: document.getElementById('petContato').value,
+      imagem: imagePreview.querySelector('img')?.src || 'https://via.placeholder.com/200?text=Sem+Foto',
     };
+
+    console.log('Enviando pet:', formData);
 
     try {
       const res = await fetch(`${API_URL}/pets`, {
@@ -58,17 +64,24 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify(formData)
       });
 
-      if (!res.ok) throw new Error("Erro ao adicionar pet");
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.erro || "Erro ao adicionar pet");
+      }
+      
       const novoPet = await res.json();
-      alert('Pet adicionado com sucesso!');
+      console.log('Pet adicionado:', novoPet);
+      alert('Pet adicionado com sucesso! Agora ele está disponível para adoção.');
       
       // Atualizar lista de pets
-      if (typeof carregarPets === 'function') carregarPets();
+      if (typeof carregarPets === 'function') {
+        carregarPets();
+      }
 
       fecharModal();
     } catch (err) {
-      console.error(err);
-      alert("Erro ao adicionar pet");
+      console.error('Erro ao adicionar pet:', err);
+      alert("Erro ao adicionar pet: " + err.message);
     }
   });
 });

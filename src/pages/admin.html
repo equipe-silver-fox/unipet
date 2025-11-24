@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unipet - Painel Administrativo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../../public/style.css" />
+    <style>
+      .admin-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        padding-bottom: 80px;
+      }
+
+      .admin-header {
+        background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .admin-header h1 {
+        margin: 0 0 10px 0;
+        font-size: 28px;
+      }
+
+      .admin-header p {
+        margin: 0;
+        opacity: 0.9;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .stat-card .icon {
+        font-size: 40px;
+        margin-bottom: 15px;
+      }
+
+      .stat-card .number {
+        font-size: 32px;
+        font-weight: 700;
+        color: #8b5cf6;
+        margin-bottom: 5px;
+      }
+
+      .stat-card .label {
+        color: #666;
+        font-size: 14px;
+      }
+
+      .section-tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #e5e7eb;
+      }
+
+      .tab-btn {
+        padding: 12px 24px;
+        background: none;
+        border: none;
+        border-bottom: 3px solid transparent;
+        color: #666;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .tab-btn.active {
+        color: #8b5cf6;
+        border-bottom-color: #8b5cf6;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .list-item {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .list-item-title {
+        font-weight: 600;
+        font-size: 18px;
+        color: #333;
+      }
+
+      .status-badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .status-badge.pendente {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .status-badge.aprovado {
+        background: #d1fae5;
+        color: #065f46;
+      }
+
+      .status-badge.rejeitado {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .list-item-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+      }
+
+      .detail-field {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .detail-field label {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 5px;
+        font-weight: 600;
+      }
+
+      .detail-field span {
+        color: #333;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      .btn-action {
+        flex: 1;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .btn-aprovar {
+        background: #10b981;
+        color: white;
+      }
+
+      .btn-aprovar:hover {
+        background: #059669;
+      }
+
+      .btn-rejeitar {
+        background: #ef4444;
+        color: white;
+      }
+
+      .btn-rejeitar:hover {
+        background: #dc2626;
+      }
+
+      .btn-detalhes {
+        background: #6366f1;
+        color: white;
+      }
+
+      .btn-detalhes:hover {
+        background: #4f46e5;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #666;
+      }
+
+      .empty-state i {
+        font-size: 64px;
+        color: #d1d5db;
+        margin-bottom: 20px;
+      }
+
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background: white;
+        color: #8b5cf6;
+        border: 2px solid #8b5cf6;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        margin-bottom: 20px;
+        transition: all 0.3s;
+      }
+
+      .back-btn:hover {
+        background: #8b5cf6;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin-container">
+      <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+        Voltar ao Sistema
+      </a>
+
+      <div class="admin-header">
+        <h1><i class="fa-solid fa-chart-line"></i> Painel Administrativo</h1>
+        <p>Gerencie adoções, doações e acompanhe estatísticas</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="icon">🐾</div>
+          <div class="number" id="totalAdocoes">0</div>
+          <div class="label">Solicitações de Adoção</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="icon">❤️</div>
+          <div class="number" id="totalDoacoes">0</div>
+          <div class="label">Doações Recebidas</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="icon">⏳</div>
+          <div class="number" id="pendentesCount">0</div>
+          <div class="label">Pendentes</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="icon">✅</div>
+          <div class="number" id="aprovadosCount">0</div>
+          <div class="label">Aprovados</div>
+        </div>
+      </div>
+
+      <div class="section-tabs">
+        <button class="tab-btn active" onclick="switchTab('adocoes')">
+          <i class="fa-solid fa-paw"></i> Adoções
+        </button>
+        <button class="tab-btn" onclick="switchTab('doacoes')">
+          <i class="fa-solid fa-hand-holding-heart"></i> Doações
+        </button>
+      </div>
+
+      <div id="tab-adocoes" class="tab-content active">
+        <div id="listaAdocoes"></div>
+      </div>
+
+      <div id="tab-doacoes" class="tab-content">
+        <div id="listaDoacoes"></div>
+      </div>
+    </div>
+
+    <script>
+      const API_URL = "http://localhost:3000";
+
+      function switchTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        
+        event.target.classList.add('active');
+        document.getElementById(`tab-${tab}`).classList.add('active');
+      }
+
+      async function carregarDados() {
+        try {
+          // Carregar adoções
+          const adocoes = JSON.parse(localStorage.getItem('adocoes') || '[]');
+          const doacoes = JSON.parse(localStorage.getItem('doacoes') || '[]');
+
+          // Atualizar estatísticas
+          document.getElementById('totalAdocoes').textContent = adocoes.length;
+          document.getElementById('totalDoacoes').textContent = doacoes.length;
+          
+          const pendentes = adocoes.filter(a => a.status === 'pendente').length;
+          const aprovados = adocoes.filter(a => a.status === 'aprovado').length;
+          
+          document.getElementById('pendentesCount').textContent = pendentes;
+          document.getElementById('aprovadosCount').textContent = aprovados;
+
+          // Renderizar listas
+          renderizarAdocoes(adocoes);
+          renderizarDoacoes(doacoes);
+
+        } catch (error) {
+          console.error('Erro ao carregar dados:', error);
+        }
+      }
+
+      function renderizarAdocoes(adocoes) {
+        const container = document.getElementById('listaAdocoes');
+        
+        if (adocoes.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <i class="fa-solid fa-inbox"></i>
+              <h3>Nenhuma solicitação de adoção</h3>
+              <p>Quando alguém solicitar adotar um pet, aparecerá aqui.</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = adocoes.map((adocao, index) => `
+          <div class="list-item">
+            <div class="list-item-header">
+              <div class="list-item-title">
+                <i class="fa-solid fa-paw"></i> ${adocao.petNome || adocao.petName || 'Pet'}
+              </div>
+              <span class="status-badge ${adocao.status}">${adocao.status}</span>
+            </div>
+
+            <div class="list-item-details">
+              <div class="detail-field">
+                <label><i class="fa-solid fa-user"></i> Adotante</label>
+                <span>${adocao.adotante.nome}</span>
+              </div>
+
+              <div class="detail-field">
+                <label><i class="fa-solid fa-envelope"></i> E-mail</label>
+                <span>${adocao.adotante.email}</span>
+              </div>
+
+              <div class="detail-field">
+                <label><i class="fa-solid fa-phone"></i> Telefone</label>
+                <span>${adocao.adotante.telefone}</span>
+              </div>
+
+              <div class="detail-field">
+                <label><i class="fa-solid fa-id-card"></i> CPF</label>
+                <span>${adocao.adotante.cpf}</span>
+              </div>
+
+              <div class="detail-field">
+                <label><i class="fa-solid fa-location-dot"></i> Endereço</label>
+                <span>${adocao.adotante.endereco}</span>
+              </div>
+
+              <div class="detail-field">
+                <label><i class="fa-solid fa-paw"></i> Experiência</label>
+                <span>${adocao.adotante.experiencia}</span>
+              </div>
+
+              <div class="detail-field">
+                <label><i class="fa-solid fa-calendar"></i> Data da Solicitação</label>
+                <span>${adocao.dataSolicitacaoFormatada || new Date(adocao.datasolicitacao || adocao.data).toLocaleString('pt-BR')}</span>
+              </div>
+            </div>
+
+            <div class="detail-field" style="margin-top: 15px;">
+              <label><i class="fa-solid fa-message"></i> Motivação</label>
+              <span>${adocao.adotante.motivacao}</span>
+            </div>
+
+            ${adocao.status === 'pendente' ? `
+            <div class="action-buttons">
+              <button class="btn-action btn-aprovar" onclick="aprovarAdocao(${index})">
+                <i class="fa-solid fa-check"></i> Aprovar
+              </button>
+              <button class="btn-action btn-rejeitar" onclick="rejeitarAdocao(${index})">
+                <i class="fa-solid fa-times"></i> Rejeitar
+              </button>
+            </div>
+            ` : ''}
+          </div>
+        `).join('');
+      }
+
+      function renderizarDoacoes(doacoes) {
+        const container = document.getElementById('listaDoacoes');
+        
+        if (doacoes.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <i class="fa-solid fa-inbox"></i>
+              <h3>Nenhuma doação registrada</h3>
+              <p>Quando alguém fizer uma doação, aparecerá aqui.</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = doacoes.map(doacao => `
+          <div class="list-item">
+            <div class="list-item-header">
+              <div class="list-item-title">
+                <i class="fa-solid fa-gift"></i> ${doacao.tipo}
+              </div>
+            </div>
+
+            <div class="list-item-details">
+              <div class="detail-field">
+                <label><i class="fa-solid fa-user"></i> Doador</label>
+                <span>${doacao.doador.nome}</span>
+              </div>
+
+              <div class="detail-field">
+                <label><i class="fa-solid fa-envelope"></i> E-mail</label>
+                <span>${doacao.doador.email}</span>
+              </div>
+
+              <div class="detail-field">
+                <label><i class="fa-solid fa-phone"></i> Telefone</label>
+                <span>${doacao.doador.telefone}</span>
+              </div>
+
+              <div class="detail-field">
+                <label><i class="fa-solid fa-calendar"></i> Data</label>
+                <span>${new Date(doacao.data).toLocaleString('pt-BR')}</span>
+              </div>
+            </div>
+
+            ${doacao.detalhes ? `
+            <div class="detail-field" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
+              <label><i class="fa-solid fa-info-circle"></i> Detalhes da Doação</label>
+              ${renderDetalhesDoacao(doacao)}
+            </div>
+            ` : ''}
+
+            ${doacao.observacoes ? `
+            <div class="detail-field" style="margin-top: 10px;">
+              <label><i class="fa-solid fa-comment"></i> Observações</label>
+              <span>${doacao.observacoes}</span>
+            </div>
+            ` : ''}
+          </div>
+        `).join('');
+      }
+
+      function renderDetalhesDoacao(doacao) {
+        if (!doacao.detalhes) return '';
+
+        const detalhes = doacao.detalhes;
+        let html = '<div style="margin-top: 10px;">';
+
+        if (doacao.tipo === 'Ração') {
+          html += `
+            <p><strong>Marca/Nome:</strong> ${detalhes.nomeMarca || '-'}</p>
+            <p><strong>Para:</strong> ${detalhes.tipoAnimal || '-'}</p>
+            <p><strong>Quantidade:</strong> ${detalhes.quantidade || '-'}</p>
+            <p><strong>Validade:</strong> ${detalhes.validade ? new Date(detalhes.validade).toLocaleDateString('pt-BR') : '-'}</p>
+          `;
+        } else if (doacao.tipo === 'Remédios') {
+          html += `
+            <p><strong>Nome:</strong> ${detalhes.nome || '-'}</p>
+            <p><strong>Tipo:</strong> ${detalhes.tipo || '-'}</p>
+            <p><strong>Quantidade:</strong> ${detalhes.quantidade || '-'}</p>
+            <p><strong>Validade:</strong> ${detalhes.validade ? new Date(detalhes.validade).toLocaleDateString('pt-BR') : '-'}</p>
+          `;
+        } else if (doacao.tipo === 'Acessórios') {
+          html += `
+            <p><strong>Tipo:</strong> ${detalhes.tipo || '-'}</p>
+            <p><strong>Descrição:</strong> ${detalhes.descricao || '-'}</p>
+            <p><strong>Estado:</strong> ${detalhes.estado || '-'}</p>
+            <p><strong>Quantidade:</strong> ${detalhes.quantidade || '-'}</p>
+          `;
+        } else if (doacao.tipo === 'Doação Financeira') {
+          html += `
+            <p><strong>Valor:</strong> R$ ${detalhes.valor || '0,00'}</p>
+            <p><strong>Frequência:</strong> ${detalhes.frequencia || '-'}</p>
+            <p><strong>Forma de Pagamento:</strong> ${detalhes.formaPagamento || '-'}</p>
+          `;
+        }
+
+        html += '</div>';
+        return html;
+      }
+
+      function aprovarAdocao(index) {
+        const adocoes = JSON.parse(localStorage.getItem('adocoes') || '[]');
+        adocoes[index].status = 'aprovado';
+        localStorage.setItem('adocoes', JSON.stringify(adocoes));
+        alert('✅ Adoção aprovada com sucesso!');
+        carregarDados();
+      }
+
+      function rejeitarAdocao(index) {
+        if (confirm('Tem certeza que deseja rejeitar esta solicitação de adoção?')) {
+          const adocoes = JSON.parse(localStorage.getItem('adocoes') || '[]');
+          adocoes[index].status = 'rejeitado';
+          localStorage.setItem('adocoes', JSON.stringify(adocoes));
+          alert('❌ Adoção rejeitada.');
+          carregarDados();
+        }
+      }
+
+      // Carregar dados ao iniciar
+      carregarDados();
+    </script>
+  </body>
+</html>

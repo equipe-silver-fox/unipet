@@ -1,4 +1,22 @@
 {
+  "usuarios": [
+    {
+      "id": 1,
+      "nome": "Administrador",
+      "email": "admin@gmail.com",
+      "senha": "admin123",
+      "dataCadastro": "2025-11-24T00:00:00.000Z",
+      "admin": true
+    },
+    {
+      "id": 2,
+      "nome": "Teste User",
+      "email": "teste@gmail.com",
+      "senha": "teste123",
+      "dataCadastro": "2025-11-24T00:00:00.000Z",
+      "admin": false
+    }
+  ],
   "pets": [
     {
       "id": 1,
@@ -9,7 +27,10 @@
       "descricao": "Rex é um cachorro muito carinhoso e brincalhão. Adora passear e brincar com crianças. É muito obediente e já está castrado e vacinado.",
       "local": "São Paulo - SP",
       "contato": "(11) 98765-4321",
-      "imagem": "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=400&fit=crop"
+      "imagem": "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=400&fit=crop",
+      "usuarioId": 1,
+      "disponivel": true,
+      "dataCadastro": "2025-11-24T00:00:00.000Z"
     },
     {
       "id": 2,
@@ -20,7 +41,10 @@
       "descricao": "Mimi é uma gatinha muito dócil e carinhosa. Adora carinho e é muito tranquila. Ideal para apartamento, já castrada e vacinada.",
       "local": "Rio de Janeiro - RJ",
       "contato": "(21) 99876-5432",
-      "imagem": "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=400&fit=crop"
+      "imagem": "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=400&fit=crop",
+      "usuarioId": 1,
+      "disponivel": true,
+      "dataCadastro": "2025-11-24T00:00:00.000Z"
     },
     {
       "id": 3,
@@ -31,7 +55,10 @@
       "descricao": "Thor é um cachorro forte, leal e protetor. Ideal para casas com quintal. Já está castrado, vacinado e vermifugado. Ótimo com crianças.",
       "local": "Belo Horizonte - MG",
       "contato": "(31) 97654-3210",
-      "imagem": "https://images.unsplash.com/photo-1568572933382-74d440642117?w=400&h=400&fit=crop"
+      "imagem": "https://images.unsplash.com/photo-1568572933382-74d440642117?w=400&h=400&fit=crop",
+      "usuarioId": 1,
+      "disponivel": true,
+      "dataCadastro": "2025-11-24T00:00:00.000Z"
     },
     {
       "id": 4,
@@ -42,7 +69,10 @@
       "descricao": "Luna é uma gatinha jovem, muito ativa e brincalhona. Adora explorar e é muito curiosa. Perfeita para lares com energia!",
       "local": "Curitiba - PR",
       "contato": "(41) 96543-2109",
-      "imagem": "https://images.unsplash.com/photo-1573865526739-10c1dd0c84ab?w=400&h=400&fit=crop"
+      "imagem": "https://images.unsplash.com/photo-1573865526739-10c1dd0c84ab?w=400&h=400&fit=crop",
+      "usuarioId": 1,
+      "disponivel": true,
+      "dataCadastro": "2025-11-24T00:00:00.000Z"
     },
     {
       "id": 5,
@@ -53,7 +83,12 @@
       "descricao": "Bob é um cachorro pequeno, ideal para apartamentos. Muito tranquilo e companheiro, perfeito para idosos ou pessoas que buscam um amigo calmo.",
       "local": "Porto Alegre - RS",
       "contato": "(51) 95432-1098",
-      "imagem": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=400&h=400&fit=crop"
+      "imagem": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=400&h=400&fit=crop",
+      "usuarioId": 1,
+      "disponivel": true,
+      "dataCadastro": "2025-11-24T00:00:00.000Z"
     }
-  ]
+  ],
+  "adocoes": [],
+  "doacoes": []
 }

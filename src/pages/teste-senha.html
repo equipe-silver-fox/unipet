@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Sistema de Senha</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .demo-section {
+            margin-bottom: 30px;
+        }
+
+        .demo-section h2 {
+            color: #667eea;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn-toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            padding: 8px;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .btn-toggle-password:hover {
+            color: #667eea;
+        }
+
+        .btn-toggle-password:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .senha-forca {
+            height: 4px;
+            border-radius: 2px;
+            margin-top: 8px;
+            transition: all 0.3s;
+        }
+
+        .senha-fraca { 
+            background: #ef4444; 
+            width: 33%; 
+        }
+        
+        .senha-media { 
+            background: #f59e0b; 
+            width: 66%; 
+        }
+        
+        .senha-forte { 
+            background: #10b981; 
+            width: 100%; 
+        }
+
+        .senha-info {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .senha-info.fraca { color: #ef4444; }
+        .senha-info.media { color: #f59e0b; }
+        .senha-info.forte { color: #10b981; }
+
+        .feature-list {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .feature-list h3 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .feature-list ul {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .feature-list li i {
+            color: #10b981;
+            margin-right: 8px;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-demo:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-demo:active {
+            transform: translateY(0);
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .alert.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+
+        .alert.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-lock"></i> Sistema de Visualização de Senha</h1>
+
+        <div class="demo-section">
+            <h2><i class="fas fa-eye"></i> Demo: Mostrar/Ocultar Senha</h2>
+            
+            <div class="input-group">
+                <label for="senha1">Senha Simples</label>
+                <input type="password" id="senha1" placeholder="Digite sua senha">
+                <button type="button" class="btn-toggle-password" data-target="senha1">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+
+            <div class="input-group">
+                <label for="senha2">Senha com Validação de Força</label>
+                <input type="password" id="senha2" placeholder="Digite uma senha forte">
+                <button type="button" class="btn-toggle-password" data-target="senha2">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <div id="senhaForca" class="senha-forca"></div>
+                <div id="senhaInfo" class="senha-info"></div>
+            </div>
+
+            <div class="input-group">
+                <label for="senha3">Confirmar Senha</label>
+                <input type="password" id="senha3" placeholder="Confirme sua senha">
+                <button type="button" class="btn-toggle-password" data-target="senha3">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+
+            <button class="btn-demo" id="btnValidar">
+                <i class="fas fa-check-circle"></i> Validar Senhas
+            </button>
+
+            <div id="alertBox" class="alert"></div>
+        </div>
+
+        <div class="feature-list">
+            <h3><i class="fas fa-star"></i> Funcionalidades Implementadas:</h3>
+            <ul>
+                <li><i class="fas fa-check"></i> Botão para mostrar/ocultar senha</li>
+                <li><i class="fas fa-check"></i> Ícone que muda (olho/olho cortado)</li>
+                <li><i class="fas fa-check"></i> Indicador visual de força da senha</li>
+                <li><i class="fas fa-check"></i> Validação em tempo real</li>
+                <li><i class="fas fa-check"></i> Confirmação de senha</li>
+                <li><i class="fas fa-check"></i> Mensagens de erro/sucesso</li>
+                <li><i class="fas fa-check"></i> Animações suaves</li>
+            </ul>
+        </div>
+
+        <div class="back-link">
+            <a href="login.html"><i class="fas fa-arrow-left"></i> Voltar para Login</a>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de mostrar/ocultar senha
+        const toggleButtons = document.querySelectorAll('.btn-toggle-password');
+        
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const input = document.getElementById(targetId);
+                const icon = this.querySelector('i');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+
+        // Validação de força da senha
+        const senha2 = document.getElementById('senha2');
+        const senhaForca = document.getElementById('senhaForca');
+        const senhaInfo = document.getElementById('senhaInfo');
+
+        function validarForcaSenha(senha) {
+            let forca = 0;
+            if (senha.length >= 8) forca++;
+            if (senha.length >= 12) forca++;
+            if (/[a-z]/.test(senha) && /[A-Z]/.test(senha)) forca++;
+            if (/[0-9]/.test(senha)) forca++;
+            if (/[^a-zA-Z0-9]/.test(senha)) forca++;
+            return forca;
+        }
+
+        senha2.addEventListener('input', () => {
+            const senha = senha2.value;
+            const forca = validarForcaSenha(senha);
+            
+            senhaForca.className = 'senha-forca';
+            senhaInfo.className = 'senha-info';
+            
+            if (senha.length === 0) {
+                senhaInfo.textContent = '';
+            } else if (forca <= 2) {
+                senhaForca.classList.add('senha-fraca');
+                senhaInfo.classList.add('fraca');
+                senhaInfo.textContent = '⚠️ Senha fraca - Adicione mais caracteres, números e símbolos';
+            } else if (forca <= 3) {
+                senhaForca.classList.add('senha-media');
+                senhaInfo.classList.add('media');
+                senhaInfo.textContent = '✓ Senha média - Pode melhorar adicionando símbolos';
+            } else {
+                senhaForca.classList.add('senha-forte');
+                senhaInfo.classList.add('forte');
+                senhaInfo.textContent = '✓✓ Senha forte - Excelente!';
+            }
+        });
+
+        // Validação das senhas
+        const btnValidar = document.getElementById('btnValidar');
+        const alertBox = document.getElementById('alertBox');
+        const senha1 = document.getElementById('senha1');
+        const senha3 = document.getElementById('senha3');
+
+        btnValidar.addEventListener('click', () => {
+            const s1 = senha1.value;
+            const s2 = senha2.value;
+            const s3 = senha3.value;
+
+            alertBox.style.display = 'none';
+            alertBox.className = 'alert';
+
+            if (!s1 || !s2 || !s3) {
+                alertBox.className = 'alert error';
+                alertBox.textContent = '❌ Por favor, preencha todas as senhas';
+                alertBox.style.display = 'block';
+                return;
+            }
+
+            if (s2 !== s3) {
+                alertBox.className = 'alert error';
+                alertBox.textContent = '❌ As senhas não coincidem';
+                alertBox.style.display = 'block';
+                return;
+            }
+
+            if (s2.length < 8) {
+                alertBox.className = 'alert error';
+                alertBox.textContent = '❌ A senha deve ter no mínimo 8 caracteres';
+                alertBox.style.display = 'block';
+                return;
+            }
+
+            if (validarForcaSenha(s2) < 2) {
+                alertBox.className = 'alert error';
+                alertBox.textContent = '❌ A senha é muito fraca. Use letras, números e símbolos';
+                alertBox.style.display = 'block';
+                return;
+            }
+
+            alertBox.className = 'alert success';
+            alertBox.textContent = '✅ Todas as senhas são válidas! Sistema funcionando perfeitamente.';
+            alertBox.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

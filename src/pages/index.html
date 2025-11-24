@@ -78,6 +78,245 @@
       <!-- Pets Page -->
       <div id="page-pets" class="page hidden"></div>
 
+      <!-- Donations Page -->
+      <div id="page-donations" class="page hidden">
+        <h2 class="section-title">
+          <i class="fa-solid fa-hand-holding-heart"></i> Doações para Pets
+        </h2>
+        <p class="donations-description">
+          Ajude os pets com doações de ração, remédios e outros itens essenciais!
+        </p>
+
+        <div class="donation-categories">
+          <div class="donation-card" data-type="racao">
+            <div class="donation-icon">
+              <i class="fa-solid fa-bowl-food"></i>
+            </div>
+            <h3>Ração</h3>
+            <p>Alimentos para cães e gatos</p>
+            <button class="btn-donate">Doar Agora</button>
+          </div>
+
+          <div class="donation-card" data-type="remedio">
+            <div class="donation-icon">
+              <i class="fa-solid fa-pills"></i>
+            </div>
+            <h3>Remédios</h3>
+            <p>Medicamentos veterinários</p>
+            <button class="btn-donate">Doar Agora</button>
+          </div>
+
+          <div class="donation-card" data-type="acessorios">
+            <div class="donation-icon">
+              <i class="fa-solid fa-paw"></i>
+            </div>
+            <h3>Acessórios</h3>
+            <p>Coleiras, camas, brinquedos</p>
+            <button class="btn-donate">Doar Agora</button>
+          </div>
+
+          <div class="donation-card" data-type="dinheiro">
+            <div class="donation-icon">
+              <i class="fa-solid fa-dollar-sign"></i>
+            </div>
+            <h3>Doação Financeira</h3>
+            <p>Contribua financeiramente</p>
+            <button class="btn-donate">Doar Agora</button>
+          </div>
+        </div>
+
+        <!-- Modal de Doação -->
+        <div id="modalDonation" class="modal hidden">
+          <div class="modal-content">
+            <button class="modal-close" id="closeDonationModal">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3><i class="fa-solid fa-heart"></i> Fazer Doação</h3>
+            <form id="formDonation">
+              <div class="form-group">
+                <label for="donationType">
+                  <i class="fa-solid fa-gift"></i> Tipo de Doação
+                </label>
+                <input type="text" id="donationType" readonly />
+              </div>
+
+              <!-- Campos específicos para Ração -->
+              <div id="camposRacao" class="campos-especificos hidden">
+                <div class="form-group">
+                  <label for="racaoNome">
+                    <i class="fa-solid fa-tag"></i> Nome/Marca da Ração
+                  </label>
+                  <input type="text" id="racaoNome" placeholder="Ex: Golden, Pedigree, Royal Canin" />
+                </div>
+                <div class="form-group">
+                  <label for="racaoTipo">
+                    <i class="fa-solid fa-paw"></i> Para qual animal?
+                  </label>
+                  <select id="racaoTipo">
+                    <option value="">Selecione...</option>
+                    <option value="cachorro">Cachorro</option>
+                    <option value="gato">Gato</option>
+                    <option value="ambos">Ambos</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="racaoQuantidade">
+                    <i class="fa-solid fa-weight-scale"></i> Quantidade
+                  </label>
+                  <input type="text" id="racaoQuantidade" placeholder="Ex: 15kg, 3 pacotes de 5kg" />
+                </div>
+                <div class="form-group">
+                  <label for="racaoValidade">
+                    <i class="fa-solid fa-calendar"></i> Validade
+                  </label>
+                  <input type="date" id="racaoValidade" />
+                </div>
+              </div>
+
+              <!-- Campos específicos para Remédios -->
+              <div id="camposRemedio" class="campos-especificos hidden">
+                <div class="form-group">
+                  <label for="remedioNome">
+                    <i class="fa-solid fa-pills"></i> Nome do Remédio
+                  </label>
+                  <input type="text" id="remedioNome" placeholder="Ex: Antibiótico, Vermífugo" />
+                </div>
+                <div class="form-group">
+                  <label for="remedioTipo">
+                    <i class="fa-solid fa-capsules"></i> Tipo
+                  </label>
+                  <input type="text" id="remedioTipo" placeholder="Ex: Comprimido, Líquido, Pomada" />
+                </div>
+                <div class="form-group">
+                  <label for="remedioQuantidade">
+                    <i class="fa-solid fa-hashtag"></i> Quantidade
+                  </label>
+                  <input type="text" id="remedioQuantidade" placeholder="Ex: 2 caixas, 1 frasco" />
+                </div>
+                <div class="form-group">
+                  <label for="remedioValidade">
+                    <i class="fa-solid fa-calendar"></i> Validade
+                  </label>
+                  <input type="date" id="remedioValidade" />
+                </div>
+              </div>
+
+              <!-- Campos específicos para Acessórios -->
+              <div id="camposAcessorios" class="campos-especificos hidden">
+                <div class="form-group">
+                  <label for="acessorioTipo">
+                    <i class="fa-solid fa-list"></i> Tipo de Acessório
+                  </label>
+                  <select id="acessorioTipo">
+                    <option value="">Selecione...</option>
+                    <option value="coleira">Coleira</option>
+                    <option value="guia">Guia</option>
+                    <option value="cama">Cama/Almofada</option>
+                    <option value="brinquedo">Brinquedo</option>
+                    <option value="comedouro">Comedouro/Bebedouro</option>
+                    <option value="casinha">Casinha</option>
+                    <option value="outro">Outro</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="acessorioDescricao">
+                    <i class="fa-solid fa-align-left"></i> Descrição
+                  </label>
+                  <input type="text" id="acessorioDescricao" placeholder="Ex: Coleira azul tamanho M, Cama grande" />
+                </div>
+                <div class="form-group">
+                  <label for="acessorioEstado">
+                    <i class="fa-solid fa-star"></i> Estado
+                  </label>
+                  <select id="acessorioEstado">
+                    <option value="">Selecione...</option>
+                    <option value="novo">Novo</option>
+                    <option value="seminovo">Semi-novo</option>
+                    <option value="usado">Usado (bom estado)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="acessorioQuantidade">
+                    <i class="fa-solid fa-hashtag"></i> Quantidade
+                  </label>
+                  <input type="number" id="acessorioQuantidade" placeholder="Ex: 1, 2, 3" min="1" />
+                </div>
+              </div>
+
+              <!-- Campos específicos para Doação Financeira -->
+              <div id="camposDinheiro" class="campos-especificos hidden">
+                <div class="form-group">
+                  <label for="dinheiroValor">
+                    <i class="fa-solid fa-dollar-sign"></i> Valor da Doação
+                  </label>
+                  <input type="number" id="dinheiroValor" placeholder="R$ 0,00" min="1" step="0.01" />
+                </div>
+                <div class="form-group">
+                  <label for="dinheiroFrequencia">
+                    <i class="fa-solid fa-clock"></i> Frequência
+                  </label>
+                  <select id="dinheiroFrequencia">
+                    <option value="unica">Doação única</option>
+                    <option value="mensal">Mensal</option>
+                    <option value="trimestral">Trimestral</option>
+                    <option value="anual">Anual</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="dinheiroPagamento">
+                    <i class="fa-solid fa-credit-card"></i> Forma de Pagamento
+                  </label>
+                  <select id="dinheiroPagamento">
+                    <option value="">Selecione...</option>
+                    <option value="pix">PIX</option>
+                    <option value="cartao">Cartão de Crédito</option>
+                    <option value="boleto">Boleto</option>
+                    <option value="transferencia">Transferência Bancária</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="donorName">
+                  <i class="fa-solid fa-user"></i> Seu Nome
+                </label>
+                <input type="text" id="donorName" placeholder="Nome completo" required />
+              </div>
+
+              <div class="form-group">
+                <label for="donorEmail">
+                  <i class="fa-solid fa-envelope"></i> E-mail
+                </label>
+                <input type="email" id="donorEmail" placeholder="seu@email.com" required />
+              </div>
+
+              <div class="form-group">
+                <label for="donorPhone">
+                  <i class="fa-solid fa-phone"></i> Telefone
+                </label>
+                <input type="tel" id="donorPhone" placeholder="(00) 00000-0000" required />
+              </div>
+
+              <div class="form-group">
+                <label for="donationObservacoes">
+                  <i class="fa-solid fa-comment"></i> Observações Adicionais
+                </label>
+                <textarea id="donationObservacoes" placeholder="Informações complementares (opcional)"></textarea>
+              </div>
+
+              <div class="modal-buttons">
+                <button type="submit">
+                  <i class="fa-solid fa-check"></i> Confirmar Doação
+                </button>
+                <button type="button" id="btnCancelDonation">
+                  <i class="fa-solid fa-times"></i> Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
       <!-- Profile Page -->
       <div id="page-profile" class="page hidden">
         <div class="profile-header">
@@ -99,6 +338,16 @@
             </div>
           </div>
 
+          <div class="menu-item" id="btnPainelAdmin" style="display: none;">
+            <div class="menu-icon">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <div class="menu-text">Painel Administrativo</div>
+            <div class="menu-arrow">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+
           <div class="menu-item" data-action="sair">
             <div class="menu-icon">
               <i class="fa-solid fa-right-from-bracket"></i>
@@ -115,6 +364,9 @@
         <!-- Modal para adicionar pet -->
         <div id="modalAddPetProfile" class="modal hidden">
           <div class="modal-content">
+            <button class="modal-close" id="closeModalAddPetProfile" aria-label="Fechar modal">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
             <h3><i class="fa-solid fa-paw"></i> Adicionar Novo Pet</h3>
             <form id="formAddPetProfile">
               <div class="file-input-container">
@@ -131,12 +383,40 @@
 
               <div class="form-group">
                 <label for="petTag">
-                  <i class="fa-solid fa-tag"></i> Tag/Identificação
+                  <i class="fa-solid fa-tag"></i> Nome do Pet
                 </label>
                 <input
                   type="text"
                   id="petTag"
-                  placeholder="Ex: Cachorro fofo, Gato carinhoso"
+                  placeholder="Ex: Rex, Mimi, Bolinha"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="petTipo">
+                  <i class="fa-solid fa-paw"></i> Tipo
+                </label>
+                <select id="petTipo" required>
+                  <option value="">Selecione o tipo...</option>
+                  <option value="Cachorro">Cachorro</option>
+                  <option value="Gato">Gato</option>
+                  <option value="Pássaro">Pássaro</option>
+                  <option value="Coelho">Coelho</option>
+                  <option value="Outro">Outro</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="petIdade">
+                  <i class="fa-solid fa-calendar"></i> Idade (anos)
+                </label>
+                <input
+                  type="number"
+                  id="petIdade"
+                  placeholder="Ex: 2"
+                  min="0"
+                  max="30"
                   required
                 />
               </div>
@@ -181,9 +461,9 @@
                   <i class="fa-solid fa-phone"></i> Contato
                 </label>
                 <input
-                  type="text"
+                  type="tel"
                   id="petContato"
-                  placeholder="Ex: (11) 99999-9999, email@exemplo.com"
+                  placeholder="Ex: (11) 99999-9999"
                   required
                 />
               </div>
@@ -202,6 +482,102 @@
       </div>
 
       <!-- Modal/Form para adicionar pet -->
+
+      <!-- Modal de Detalhes do Pet -->
+      <div id="modalPetDetails" class="modal hidden">
+        <div class="modal-content modal-pet-details">
+          <button class="modal-close" id="closePetDetailsModal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div id="petDetailsContent">
+            <!-- Conteúdo será preenchido dinamicamente -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal de Adoção -->
+      <div id="modalAdoption" class="modal hidden">
+        <div class="modal-content">
+          <button class="modal-close" id="closeAdoptionModal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <h3><i class="fa-solid fa-heart"></i> Formulário de Adoção</h3>
+          <form id="formAdoption">
+            <input type="hidden" id="adoptionPetId" />
+            <input type="hidden" id="adoptionPetName" />
+
+            <div class="form-group">
+              <label for="adopter-name">
+                <i class="fa-solid fa-user"></i> Nome Completo
+              </label>
+              <input type="text" id="adopter-name" placeholder="Seu nome completo" required />
+            </div>
+
+            <div class="form-group">
+              <label for="adopter-email">
+                <i class="fa-solid fa-envelope"></i> E-mail
+              </label>
+              <input type="email" id="adopter-email" placeholder="seu@email.com" required />
+            </div>
+
+            <div class="form-group">
+              <label for="adopter-phone">
+                <i class="fa-solid fa-phone"></i> Telefone
+              </label>
+              <input type="tel" id="adopter-phone" placeholder="(00) 00000-0000" required />
+            </div>
+
+            <div class="form-group">
+              <label for="adopter-cpf">
+                <i class="fa-solid fa-id-card"></i> CPF
+              </label>
+              <input type="text" id="adopter-cpf" placeholder="000.000.000-00" required />
+            </div>
+
+            <div class="form-group">
+              <label for="adopter-address">
+                <i class="fa-solid fa-location-dot"></i> Endereço Completo
+              </label>
+              <textarea id="adopter-address" placeholder="Rua, número, bairro, cidade, estado" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="adopter-experience">
+                <i class="fa-solid fa-paw"></i> Experiência com Pets
+              </label>
+              <select id="adopter-experience" required>
+                <option value="">Selecione...</option>
+                <option value="primeira-vez">Primeira vez com pet</option>
+                <option value="ja-teve">Já tive pets antes</option>
+                <option value="tenho-atualmente">Tenho pets atualmente</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="adopter-motivation">
+                <i class="fa-solid fa-message"></i> Por que deseja adotar?
+              </label>
+              <textarea id="adopter-motivation" placeholder="Conte-nos sobre sua motivação..." required></textarea>
+            </div>
+
+            <div class="form-group checkbox-group">
+              <label>
+                <input type="checkbox" id="adopter-terms" required />
+                <span>Concordo com os termos de adoção responsável e me comprometo a cuidar do animal</span>
+              </label>
+            </div>
+
+            <div class="modal-buttons">
+              <button type="submit">
+                <i class="fa-solid fa-check"></i> Enviar Solicitação
+              </button>
+              <button type="button" id="btnCancelAdoption">
+                <i class="fa-solid fa-times"></i> Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
     <!-- Footer Navigation -->
@@ -214,6 +590,10 @@
         <i class="fa-solid fa-paw nav-icon"></i>
         <span class="nav-label">Pets</span>
       </a>
+      <a class="nav-item" data-page="donations">
+        <i class="fa-solid fa-hand-holding-heart nav-icon"></i>
+        <span class="nav-label">Doações</span>
+      </a>
       <a class="nav-item" data-page="profile">
         <i class="fa-solid fa-user nav-icon"></i>
         <span class="nav-label">Perfil</span>
@@ -221,22 +601,33 @@
     </nav>
 
     <script src="../../public/script.js"></script>
+    <script src="../api.js"></script>
     <script>
-      const API_URL = "http://localhost:3000";
-      const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+      // ============================================
+      // 🔐 VERIFICAÇÃO DE AUTENTICAÇÃO
+      // ============================================
+      const usuario = obterUsuarioLogado();
 
       if (!usuario) {
         window.location.href = "loguin.html";
       } else {
         document.querySelector(".profile-name").textContent = usuario.nome;
         document.querySelector(".profile-email").textContent = usuario.email;
+        
+        // Mostrar painel admin para administradores
+        if (eAdmin()) {
+          document.getElementById('btnPainelAdmin').style.display = 'flex';
+        }
       }
 
-      // Menu inferior
+      // ============================================
+      // 📱 NAVEGAÇÃO DO MENU INFERIOR
+      // ============================================
       const navItems = document.querySelectorAll(".nav-item");
       const pages = document.querySelectorAll(".page");
       navItems.forEach((item) => {
-        item.addEventListener("click", function () {
+        item.addEventListener("click", function (e) {
+          e.preventDefault();
           navItems.forEach((nav) => nav.classList.remove("active"));
           this.classList.add("active");
           pages.forEach((p) => p.classList.add("hidden"));
@@ -247,60 +638,400 @@
         });
       });
 
-      // Perfil
-      const [editarPerfilBtn, sairBtn] = document.querySelectorAll(
-        ".profile-menu .menu-item"
-      );
+      // ============================================
+      // 👤 PERFIL - EDITAR E SAIR
+      // ============================================
+      const menuItems = document.querySelectorAll(".profile-menu .menu-item");
+      const editarPerfilBtn = menuItems[0];
+      const painelAdminBtn = document.getElementById('btnPainelAdmin');
+      const sairBtn = menuItems[menuItems.length - 1];
 
       editarPerfilBtn.addEventListener("click", async () => {
         const novoNome = prompt("Digite seu novo nome:", usuario.nome);
         const novoEmail = prompt("Digite seu novo email:", usuario.email);
         if (!novoNome || !novoEmail) return alert("Nome e email obrigatórios!");
-        usuario.nome = novoNome;
-        usuario.email = novoEmail;
-        localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
-        document.querySelector(".profile-name").textContent = novoNome;
-        document.querySelector(".profile-email").textContent = novoEmail;
-
+        
         try {
-          const res = await fetch(`${API_URL}/usuarios/${usuario.id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(usuario),
+          // Usar função da API
+          const usuarioAtualizado = await atualizarUsuario(usuario.id, {
+            nome: novoNome,
+            email: novoEmail
           });
-          if (!res.ok) throw new Error();
-          alert("Perfil atualizado com sucesso!");
-        } catch {
-          alert("Não foi possível atualizar o perfil no servidor.");
+          
+          // Atualizar localStorage e interface
+          usuario.nome = novoNome;
+          usuario.email = novoEmail;
+          salvarUsuarioLogado(usuario);
+          document.querySelector(".profile-name").textContent = novoNome;
+          document.querySelector(".profile-email").textContent = novoEmail;
+          
+          alert("✅ Perfil atualizado com sucesso!");
+        } catch (error) {
+          alert("❌ Erro ao atualizar perfil: " + error.message);
         }
       });
 
       sairBtn.addEventListener("click", () => {
-        localStorage.removeItem("usuarioLogado");
+        removerUsuarioLogado();
         window.location.href = "loguin.html";
       });
 
-      // Pets
+      painelAdminBtn?.addEventListener("click", () => {
+        window.location.href = "admin.html";
+      });
+
+      // ============================================
+      // 🐾 CARREGAR PETS (USA API)
+      // ============================================
       async function carregarPets() {
-        const res = await fetch(`${API_URL}/pets`);
-        const pets = await res.json();
-        const container = document.getElementById("page-pets");
-        container.innerHTML = `<h2 class="section-title"><i class="fa-solid fa-dog"></i> Nossos Pets</h2>`;
-        pets.forEach((p) => {
-          const card = document.createElement("div");
-          card.className = "pet-card";
-          card.innerHTML = `
-            <div class="pet-avatar"><img src="${p.imagem}" /></div>
-            <div class="pet-info">
-              <div class="pet-name">${p.nome}</div>
-              <div class="pet-details"><span>${p.tipo}</span> • <span>${
-            p.idade || "?"
-          } anos</span></div>
-            </div>`;
-          container.appendChild(card);
+        try {
+          console.log('🔄 Carregando pets via API...');
+          
+          // Usar função da API
+          const pets = await listarPets({ disponivel: true });
+          console.log('✅ Pets carregados:', pets.length);
+          
+          const container = document.getElementById("page-pets");
+          container.innerHTML = `<h2 class="section-title"><i class="fa-solid fa-dog"></i> Pets para Adoção</h2>`;
+          
+          pets.forEach((p) => {
+            const card = document.createElement("div");
+            card.className = "pet-card clickable";
+            card.setAttribute('data-pet-id', p.id);
+            card.innerHTML = `
+              <div class="pet-avatar"><img src="${p.imagem}" alt="${p.nome}" /></div>
+              <div class="pet-info">
+                <div class="pet-name">${p.nome}</div>
+                <div class="pet-details"><span>${p.tipo}</span> • <span>${p.idade || "?"} anos</span></div>
+                <div class="pet-badge">Disponível</div>
+              </div>
+              <div class="pet-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>`;
+            
+            card.addEventListener('click', (e) => {
+              console.log('Card clicado:', p.nome);
+              mostrarDetalhesPet(p);
+            });
+            container.appendChild(card);
+          });
+          
+          console.log('Cards de pets criados:', pets.length);
+        } catch (error) {
+          console.error('Erro ao carregar pets:', error);
+          const container = document.getElementById("page-pets");
+          container.innerHTML = `
+            <h2 class="section-title"><i class="fa-solid fa-dog"></i> Pets para Adoção</h2>
+            <p style="text-align: center; color: #ef4444; padding: 20px;">
+              Erro ao carregar pets. Verifique se o servidor está rodando.
+            </p>
+          `;
+        }
+      }
+
+      // Mostrar detalhes do pet (função global)
+      window.mostrarDetalhesPet = function(pet) {
+        console.log('Mostrando detalhes do pet:', pet);
+        
+        const modal = document.getElementById('modalPetDetails');
+        const content = document.getElementById('petDetailsContent');
+        
+        if (!modal || !content) {
+          console.error('Modal ou conteúdo não encontrado!');
+          return;
+        }
+        
+        content.innerHTML = `
+          <div class="pet-details-header">
+            <img src="${pet.imagem}" alt="${pet.nome}" class="pet-details-image" />
+            <h2>${pet.nome}</h2>
+            <div class="pet-details-badge">Disponível para Adoção</div>
+          </div>
+          
+          <div class="pet-details-info">
+            <div class="info-item">
+              <i class="fa-solid fa-paw"></i>
+              <div>
+                <strong>Tipo:</strong>
+                <span>${pet.tipo}</span>
+              </div>
+            </div>
+            
+            <div class="info-item">
+              <i class="fa-solid fa-calendar"></i>
+              <div>
+                <strong>Idade:</strong>
+                <span>${pet.idade || 'Não informada'} anos</span>
+              </div>
+            </div>
+            
+            <div class="info-item">
+              <i class="fa-solid fa-tag"></i>
+              <div>
+                <strong>Raça:</strong>
+                <span>${pet.raca || 'Não informada'}</span>
+              </div>
+            </div>
+            
+            <div class="info-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <div>
+                <strong>Localização:</strong>
+                <span>${pet.local || 'Não informada'}</span>
+              </div>
+            </div>
+            
+            <div class="info-item">
+              <i class="fa-solid fa-phone"></i>
+              <div>
+                <strong>Contato:</strong>
+                <span>${pet.contato || 'Não informado'}</span>
+              </div>
+            </div>
+          </div>
+          
+          ${pet.descricao ? `
+          <div class="pet-details-description">
+            <h4><i class="fa-solid fa-align-left"></i> Descrição</h4>
+            <p>${pet.descricao}</p>
+          </div>` : ''}
+          
+          <div class="pet-details-actions">
+            <button class="btn-adopt" onclick="abrirFormularioAdocao(${pet.id}, '${pet.nome}')">
+              <i class="fa-solid fa-heart"></i> Quero Adotar
+            </button>
+            <button class="btn-share">
+              <i class="fa-solid fa-share-nodes"></i> Compartilhar
+            </button>
+          </div>
+        `;
+        
+        modal.classList.remove('hidden');
+      }
+
+      // Abrir formulário de adoção (função global)
+      window.abrirFormularioAdocao = function(petId, petName) {
+        document.getElementById('modalPetDetails').classList.add('hidden');
+        document.getElementById('adoptionPetId').value = petId;
+        document.getElementById('adoptionPetName').value = petName;
+        document.getElementById('modalAdoption').classList.remove('hidden');
+      }
+
+      // Fechar modais ao clicar no X
+      document.getElementById('closePetDetailsModal')?.addEventListener('click', () => {
+        document.getElementById('modalPetDetails').classList.add('hidden');
+      });
+
+      // Fechar modal ao clicar fora
+      document.getElementById('modalPetDetails')?.addEventListener('click', (e) => {
+        if (e.target.id === 'modalPetDetails') {
+          document.getElementById('modalPetDetails').classList.add('hidden');
+        }
+      });
+
+      // ============================================
+      // 💚 FORMULÁRIO DE ADOÇÃO (USA API)
+      // ============================================
+      document.getElementById('formAdoption')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Validar checkbox de termos
+        if (!document.getElementById('adopter-terms').checked) {
+          alert('⚠️ Você precisa concordar com os termos de adoção responsável.');
+          return;
+        }
+        
+        const petId = parseInt(document.getElementById('adoptionPetId').value);
+        const petName = document.getElementById('adoptionPetName').value;
+        
+        const adocaoData = {
+          petId: petId,
+          petNome: petName,
+          adotante: {
+            nome: document.getElementById('adopter-name').value,
+            email: document.getElementById('adopter-email').value,
+            telefone: document.getElementById('adopter-phone').value,
+            cpf: document.getElementById('adopter-cpf').value,
+            endereco: document.getElementById('adopter-address').value,
+            experiencia: document.getElementById('adopter-experience').value,
+            motivacao: document.getElementById('adopter-motivation').value
+          },
+          usuarioLogado: {
+            id: usuario.id,
+            nome: usuario.nome,
+            email: usuario.email
+          }
+        };
+        
+        try {
+          console.log('📤 Enviando solicitação de adoção...');
+          
+          // Usar função da API
+          const adocao = await criarAdocao(adocaoData);
+          
+          console.log('✅ Adoção registrada:', adocao);
+          
+          alert(`✅ Solicitação de adoção enviada com sucesso!\n\n🐾 Pet: ${petName}\n📅 Data: ${formatarData(adocao.datasolicitacao)}\n\n📧 Você receberá um e-mail em breve com os próximos passos para adotar ${petName}.\n\nObrigado por escolher a adoção responsável! ❤️`);
+          
+          // Fechar modal e limpar formulário
+          document.getElementById('modalAdoption').classList.add('hidden');
+          document.getElementById('formAdoption').reset();
+        } catch (error) {
+          console.error('❌ Erro ao enviar adoção:', error);
+          alert('❌ Erro ao enviar solicitação: ' + error.message);
+        }
+      });
+
+      document.getElementById('closeAdoptionModal')?.addEventListener('click', () => {
+        document.getElementById('modalAdoption').classList.add('hidden');
+      });
+
+      document.getElementById('btnCancelAdoption')?.addEventListener('click', () => {
+        document.getElementById('modalAdoption').classList.add('hidden');
+      });
+
+      // Inicializar doações após o DOM carregar completamente
+      function inicializarDoacoes() {
+        const donationCards = document.querySelectorAll('.donation-card .btn-donate');
+        console.log('Botões de doação encontrados:', donationCards.length);
+        
+        donationCards.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const card = e.target.closest('.donation-card');
+            const type = card.getAttribute('data-type');
+            const typeNames = {
+              'racao': 'Ração',
+              'remedio': 'Remédios',
+              'acessorios': 'Acessórios',
+              'dinheiro': 'Doação Financeira'
+            };
+            
+            document.getElementById('donationType').value = typeNames[type];
+            
+            // Esconder todos os campos específicos
+            document.querySelectorAll('.campos-especificos').forEach(campo => {
+              campo.classList.add('hidden');
+            });
+            
+            // Mostrar campos específicos baseado no tipo
+            if (type === 'racao') {
+              document.getElementById('camposRacao').classList.remove('hidden');
+            } else if (type === 'remedio') {
+              document.getElementById('camposRemedio').classList.remove('hidden');
+            } else if (type === 'acessorios') {
+              document.getElementById('camposAcessorios').classList.remove('hidden');
+            } else if (type === 'dinheiro') {
+              document.getElementById('camposDinheiro').classList.remove('hidden');
+            }
+            
+            document.getElementById('modalDonation').classList.remove('hidden');
+          });
         });
       }
+
+      document.getElementById('closeDonationModal')?.addEventListener('click', () => {
+        document.getElementById('modalDonation').classList.add('hidden');
+      });
+
+      document.getElementById('btnCancelDonation')?.addEventListener('click', () => {
+        document.getElementById('modalDonation').classList.add('hidden');
+      });
+
+      // Fechar modal de doação ao clicar fora
+      document.getElementById('modalDonation')?.addEventListener('click', (e) => {
+        if (e.target.id === 'modalDonation') {
+          document.getElementById('modalDonation').classList.add('hidden');
+        }
+      });
+
+      // Fechar modal de adoção ao clicar fora
+      document.getElementById('modalAdoption')?.addEventListener('click', (e) => {
+        if (e.target.id === 'modalAdoption') {
+          document.getElementById('modalAdoption').classList.add('hidden');
+        }
+      });
+
+      // ============================================
+      // ❤️ FORMULÁRIO DE DOAÇÃO (USA API)
+      // ============================================
+      document.getElementById('formDonation')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const tipo = document.getElementById('donationType').value;
+        const doacaoData = {
+          tipo: tipo,
+          doador: {
+            nome: document.getElementById('donorName').value,
+            email: document.getElementById('donorEmail').value,
+            telefone: document.getElementById('donorPhone').value
+          },
+          observacoes: document.getElementById('donationObservacoes').value,
+          detalhes: {}
+        };
+        
+        // Adicionar dados específicos baseado no tipo
+        if (tipo === 'Ração') {
+          doacaoData.detalhes = {
+            nomeMarca: document.getElementById('racaoNome').value,
+            tipoAnimal: document.getElementById('racaoTipo').value,
+            quantidade: document.getElementById('racaoQuantidade').value,
+            validade: document.getElementById('racaoValidade').value
+          };
+        } else if (tipo === 'Remédios') {
+          doacaoData.detalhes = {
+            nome: document.getElementById('remedioNome').value,
+            tipo: document.getElementById('remedioTipo').value,
+            quantidade: document.getElementById('remedioQuantidade').value,
+            validade: document.getElementById('remedioValidade').value
+          };
+        } else if (tipo === 'Acessórios') {
+          doacaoData.detalhes = {
+            tipo: document.getElementById('acessorioTipo').value,
+            descricao: document.getElementById('acessorioDescricao').value,
+            estado: document.getElementById('acessorioEstado').value,
+            quantidade: document.getElementById('acessorioQuantidade').value
+          };
+        } else if (tipo === 'Doação Financeira') {
+          doacaoData.detalhes = {
+            valor: document.getElementById('dinheiroValor').value,
+            frequencia: document.getElementById('dinheiroFrequencia').value,
+            formaPagamento: document.getElementById('dinheiroPagamento').value
+          };
+        }
+        
+        try {
+          console.log('📤 Enviando doação...');
+          
+          // Usar função da API
+          const doacao = await criarDoacao(doacaoData);
+          
+          console.log('✅ Doação registrada:', doacao);
+          
+          alert(`✅ Obrigado pela sua doação de ${tipo}!\n\n📅 Data: ${formatarData(doacao.data)}\n\n📧 Entraremos em contato em breve para combinar os detalhes.\n\nSua generosidade faz a diferença! ❤️`);
+          
+          document.getElementById('modalDonation').classList.add('hidden');
+          document.getElementById('formDonation').reset();
+          
+          // Esconder todos os campos específicos após reset
+          document.querySelectorAll('.campos-especificos').forEach(campo => {
+            campo.classList.add('hidden');
+          });
+        } catch (error) {
+          console.error('❌ Erro ao enviar doação:', error);
+          alert('❌ Erro ao registrar doação: ' + error.message);
+        }
+      });
+
+      // Carregar pets e inicializar doações
       carregarPets();
+      
+      // Esperar um pouco para garantir que os elementos estejam renderizados
+      setTimeout(() => {
+        inicializarDoacoes();
+      }, 100);
     </script>
     <script src="../../server/pet.js"></script>
   </body>

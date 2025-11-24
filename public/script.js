@@ -147,6 +147,24 @@ btnReset?.addEventListener("click", () => { tamanhoFonte = 100; document.body.st
 const sairBtn = document.querySelector('.menu-item[data-action="sair"]');
 sairBtn?.addEventListener("click", logout);
 
+// --------------------- MODAL ADICIONAR PET ---------------------
+const btnAddPetProfile = document.getElementById("btnAddPetProfile");
+const modalAddPetProfile = document.getElementById("modalAddPetProfile");
+const btnCancelPetProfile = document.getElementById("btnCancelPetProfile");
+const closeModalAddPetProfile = document.getElementById("closeModalAddPetProfile");
+
+btnAddPetProfile?.addEventListener("click", () => {
+  modalAddPetProfile.classList.remove("hidden");
+});
+
+btnCancelPetProfile?.addEventListener("click", () => {
+  modalAddPetProfile.classList.add("hidden");
+});
+
+closeModalAddPetProfile?.addEventListener("click", () => {
+  modalAddPetProfile.classList.add("hidden");
+});
+
 // --------------------- EXECUTAR AO CARREGAR ---------------------
 window.addEventListener("DOMContentLoaded", () => {
   verificarSessao();

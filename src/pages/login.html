@@ -73,6 +73,26 @@
         position: fixed;
         bottom: 15px;
       }
+
+      .btn-toggle-password {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        padding: 5px;
+      }
+
+      .btn-toggle-password:hover {
+        color: #7289da;
+      }
+
+      .position-relative {
+        position: relative;
+      }
     </style>
   </head>
 
@@ -85,17 +105,33 @@
     <div class="container" style="max-width: 330px">
       <form id="loginForm">
         <div class="mb-3">
-          <input type="text" class="form-control" placeholder="Nome" required />
+          <input 
+            type="email" 
+            class="form-control" 
+            id="emailInput"
+            placeholder="Email" 
+            required 
+            autocomplete="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            title="Digite um email válido"
+          />
         </div>
-        <div class="mb-3">
+        <div class="mb-3 position-relative">
           <input
             type="password"
             class="form-control"
+            id="senhaInput"
             placeholder="Senha"
             required
+            minlength="6"
+            autocomplete="current-password"
           />
+          <button type="button" class="btn-toggle-password" id="togglePassword">
+            <i class="fas fa-eye"></i>
+          </button>
         </div>
-        <button type="submit" class="btn btn-primary w-100 mb-3">ENTRAR</button>
+        <div id="errorMsg" class="text-danger text-center mb-2" style="display: none; font-size: 14px;"></div>
+        <button type="submit" class="btn btn-primary w-100 mb-3" id="btnLogin">ENTRAR</button>
       </form>
 
       <div class="text-center">
@@ -144,36 +180,141 @@
     ></script>
     <script src="../script.js"></script>
     <script>
-      const API_URL = "http://localhost:3000"; // URL do seu backend
+      const API_URL = "http://localhost:3000";
       const loginForm = document.getElementById("loginForm");
+      const emailInput = document.getElementById("emailInput");
+      const senhaInput = document.getElementById("senhaInput");
+      const errorMsg = document.getElementById("errorMsg");
+      const btnLogin = document.getElementById("btnLogin");
+      const togglePassword = document.getElementById("togglePassword");
+
+      // Limite de tentativas de login
+      let tentativas = parseInt(localStorage.getItem('loginAttempts') || '0');
+      let ultimaTentativa = parseInt(localStorage.getItem('lastAttempt') || '0');
+      const TEMPO_BLOQUEIO = 5 * 60 * 1000; // 5 minutos
+      const MAX_TENTATIVAS = 5;
+
+      // Toggle mostrar/ocultar senha
+      togglePassword.addEventListener('click', () => {
+        const type = senhaInput.type === 'password' ? 'text' : 'password';
+        senhaInput.type = type;
+        togglePassword.innerHTML = type === 'password' 
+          ? '<i class="fas fa-eye"></i>' 
+          : '<i class="fas fa-eye-slash"></i>';
+      });
+
+      // Sanitizar input (prevenir XSS)
+      function sanitizeInput(input) {
+        const div = document.createElement('div');
+        div.textContent = input;
+        return div.innerHTML.trim();
+      }
+
+      // Validar email
+      function validarEmail(email) {
+        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return regex.test(email);
+      }
+
+      // Verificar se está bloqueado
+      function verificarBloqueio() {
+        const agora = Date.now();
+        if (tentativas >= MAX_TENTATIVAS && (agora - ultimaTentativa) < TEMPO_BLOQUEIO) {
+          const tempoRestante = Math.ceil((TEMPO_BLOQUEIO - (agora - ultimaTentativa)) / 60000);
+          errorMsg.textContent = `Muitas tentativas falhas. Tente novamente em ${tempoRestante} minuto(s).`;
+          errorMsg.style.display = 'block';
+          btnLogin.disabled = true;
+          return true;
+        }
+        if ((agora - ultimaTentativa) >= TEMPO_BLOQUEIO) {
+          tentativas = 0;
+          localStorage.setItem('loginAttempts', '0');
+        }
+        btnLogin.disabled = false;
+        return false;
+      }
+
+      // Verificar bloqueio ao carregar
+      verificarBloqueio();
 
       loginForm.addEventListener("submit", async (e) => {
         e.preventDefault();
+        errorMsg.style.display = 'none';
 
-        const nome = loginForm.querySelector('input[type="text"]').value; // tipo text para nome
-        const senha = loginForm.querySelector('input[type="password"]').value;
+        if (verificarBloqueio()) return;
+
+        const email = sanitizeInput(emailInput.value);
+        const senha = senhaInput.value;
+
+        // Validações
+        if (!validarEmail(email)) {
+          errorMsg.textContent = 'Por favor, insira um email válido.';
+          errorMsg.style.display = 'block';
+          return;
+        }
+
+        if (senha.length < 6) {
+          errorMsg.textContent = 'A senha deve ter no mínimo 6 caracteres.';
+          errorMsg.style.display = 'block';
+          return;
+        }
+
+        btnLogin.disabled = true;
+        btnLogin.textContent = 'ENTRANDO...';
 
         try {
           const res = await fetch(`${API_URL}/login`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nome, senha }),
+            headers: { 
+              "Content-Type": "application/json",
+              "X-Requested-With": "XMLHttpRequest"
+            },
+            body: JSON.stringify({ email, senha }),
           });
 
           if (!res.ok) {
+            tentativas++;
+            ultimaTentativa = Date.now();
+            localStorage.setItem('loginAttempts', tentativas.toString());
+            localStorage.setItem('lastAttempt', ultimaTentativa.toString());
+
             const erro = await res.json();
-            alert(erro.erro || "Email ou senha inválidos!");
+            errorMsg.textContent = erro.erro || 'Email ou senha inválidos!';
+            errorMsg.style.display = 'block';
+            
+            if (tentativas >= MAX_TENTATIVAS) {
+              verificarBloqueio();
+            } else {
+              errorMsg.textContent += ` (${MAX_TENTATIVAS - tentativas} tentativa(s) restante(s))`;
+            }
             return;
           }
 
-          const usuario = await res.json();
-          localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+          // Login bem-sucedido - resetar tentativas
+          localStorage.removeItem('loginAttempts');
+          localStorage.removeItem('lastAttempt');
 
-          // Redireciona para index.html
+          const usuario = await res.json();
+          
+          // Remover senha antes de armazenar
+          delete usuario.senha;
+          
+          // Criar sessão segura
+          const sessao = {
+            ...usuario,
+            timestamp: Date.now(),
+            expiresIn: 24 * 60 * 60 * 1000 // 24 horas
+          };
+          
+          localStorage.setItem("usuarioLogado", JSON.stringify(sessao));
           window.location.href = "index.html";
         } catch (err) {
           console.error(err);
-          alert("Erro na conexão com o servidor.");
+          errorMsg.textContent = 'Erro na conexão com o servidor.';
+          errorMsg.style.display = 'block';
+        } finally {
+          btnLogin.disabled = false;
+          btnLogin.textContent = 'ENTRAR';
         }
       });
     </script>

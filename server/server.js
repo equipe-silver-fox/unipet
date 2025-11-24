@@ -32,24 +32,70 @@ app.get("/usuarios", (req, res) => {
 
 app.post("/usuarios", (req, res) => {
   const { nome, email, senha } = req.body;
+  
+  // Validações de entrada
+  if (!nome || !email || !senha) {
+    return res.status(400).json({ erro: "Todos os campos são obrigatórios" });
+  }
+  
+  // Validar formato do email
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ erro: "Email inválido" });
+  }
+  
+  // Validar nome
+  if (nome.length < 3 || nome.length > 50) {
+    return res.status(400).json({ erro: "Nome deve ter entre 3 e 50 caracteres" });
+  }
+  
+  // Validar senha
+  if (senha.length < 8) {
+    return res.status(400).json({ erro: "Senha deve ter no mínimo 8 caracteres" });
+  }
+  
   const db = lerJSON("usuarios.json");
 
-  if (db.usuarios.find(u => u.email === email)) {
+  // Verificar email duplicado
+  if (db.usuarios.find(u => u.email.toLowerCase() === email.toLowerCase())) {
     return res.status(400).json({ erro: "Email já cadastrado" });
   }
 
-  const novoUsuario = { id: Date.now(), nome, email, senha };
+  const novoUsuario = { 
+    id: Date.now(), 
+    nome: nome.trim(), 
+    email: email.toLowerCase().trim(), 
+    senha // Em produção, usar bcrypt para hash
+  };
+  
   db.usuarios.push(novoUsuario);
   escreverJSON("usuarios.json", db);
-  res.status(201).json(novoUsuario);
+  
+  // Não retornar a senha
+  const { senha: _, ...usuarioSemSenha } = novoUsuario;
+  res.status(201).json(usuarioSemSenha);
 });
 
-// Rota de login ajustada
+// Rota de login com email
 app.post("/login", (req, res) => {
-  const { nome, senha } = req.body;
+  const { email, senha } = req.body;
+  
+  if (!email || !senha) {
+    return res.status(400).json({ erro: "Email e senha são obrigatórios" });
+  }
+  
   const usuarios = lerJSON("usuarios.json").usuarios;
-  const user = usuarios.find(u => u.nome === nome && u.senha === senha);
-  if (!user) return res.status(401).json({ erro: "Nome ou senha inválidos" });
+  
+  // Comparar email em lowercase e senha
+  const user = usuarios.find(u => 
+    u.email.toLowerCase() === email.toLowerCase().trim() && 
+    u.senha === senha
+  );
+  
+  if (!user) {
+    return res.status(401).json({ erro: "Email ou senha inválidos" });
+  }
+  
   res.json(user);
 });
 
@@ -75,12 +121,68 @@ app.get("/pets", (req, res) => {
 });
 
 app.post("/pets", (req, res) => {
-  const { nome, tipo, idade, imagem } = req.body;
+  const { nome, tipo, idade, imagem, raca, local, contato, descricao } = req.body;
   const db = lerJSON("pets.json");
-  const novoPet = { id: Date.now(), nome, tipo, idade, imagem };
+  const novoPet = { 
+    id: Date.now(), 
+    nome, 
+    tipo, 
+    idade, 
+    imagem,
+    raca: raca || null,
+    local: local || null,
+    contato: contato || null,
+    descricao: descricao || null
+  };
   db.pets.push(novoPet);
   escreverJSON("pets.json", db);
   res.status(201).json(novoPet);
+});
+
+// --------------------- DOAÇÕES ---------------------
+
+app.get("/doacoes", (req, res) => {
+  const doacoes = lerJSON("doacoes.json").doacoes;
+  res.json(doacoes);
+});
+
+app.post("/doacoes", (req, res) => {
+  const { tipo, doador, detalhes } = req.body;
+  const db = lerJSON("doacoes.json");
+  const novaDoacao = {
+    id: Date.now(),
+    tipo,
+    doador,
+    detalhes,
+    data: new Date().toISOString(),
+    status: "pendente"
+  };
+  db.doacoes.push(novaDoacao);
+  escreverJSON("doacoes.json", db);
+  res.status(201).json(novaDoacao);
+});
+
+// --------------------- ADOÇÕES ---------------------
+
+app.get("/adocoes", (req, res) => {
+  const adocoes = lerJSON("adocoes.json").adocoes;
+  res.json(adocoes);
+});
+
+app.post("/adocoes", (req, res) => {
+  const { petId, petName, adotante } = req.body;
+  const db = lerJSON("adocoes.json");
+  const novaAdocao = {
+    id: Date.now(),
+    petId,
+    petName,
+    adotante,
+    data: new Date().toISOString(),
+    status: "pendente"
+  };
+  db.adocoes.push(novaAdocao);
+  escreverJSON("adocoes.json", db);
+  res.status(201).json(novaAdocao);
 });
 
 // --------------------- SERVIDOR ---------------------
