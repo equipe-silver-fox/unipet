@@ -1,21 +1,24 @@
 {
   "name": "unipet",
   "version": "1.0.0",
-  "type": "module",
+  "description": "Sistema de adoção de pets com recursos avançados de acessibilidade",
+  "main": "server/server.js",
   "scripts": {
-    "dev": "node server/server.js"
+    "dev": "node server/server.js",
+    "start": "node server/server.js"
   },
-  "devDependencies": {
-    "json-server": "^1.0.0-beta.3"
-  },
-  "description": "",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/equipe-silver-fox/unipet.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "pets",
+    "adocao",
+    "acessibilidade",
+    "express",
+    "rest-api"
+  ],
+  "author": "Equipe Silver Fox",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/equipe-silver-fox/unipet/issues"

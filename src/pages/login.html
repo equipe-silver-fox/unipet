@@ -294,7 +294,8 @@
           localStorage.removeItem('loginAttempts');
           localStorage.removeItem('lastAttempt');
 
-          const usuario = await res.json();
+          const response = await res.json();
+          const usuario = response.usuario || response;
           
           // Remover senha antes de armazenar
           delete usuario.senha;
@@ -306,6 +307,7 @@
             expiresIn: 24 * 60 * 60 * 1000 // 24 horas
           };
           
+          console.log('✅ Usuário logado:', sessao);
           localStorage.setItem("usuarioLogado", JSON.stringify(sessao));
           window.location.href = "index.html";
         } catch (err) {

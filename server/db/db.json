@@ -2,18 +2,26 @@
   "usuarios": [
     {
       "id": 1,
-      "nome": "Administrador",
-      "email": "admin@gmail.com",
-      "senha": "admin123",
-      "dataCadastro": "2025-11-24T00:00:00.000Z",
+      "nome": "Vitor",
+      "email": "vitor@gmail.com",
+      "senha": "1Ad77098!@#$%",
+      "dataCadastro": "2025-11-25T16:10:57.254Z",
       "admin": true
     },
     {
       "id": 2,
-      "nome": "Teste User",
-      "email": "teste@gmail.com",
-      "senha": "teste123",
-      "dataCadastro": "2025-11-24T00:00:00.000Z",
+      "nome": "test",
+      "email": "tes@test.com",
+      "senha": "12345678",
+      "dataCadastro": "2025-11-25T17:42:55.350Z",
+      "admin": false
+    },
+    {
+      "id": 3,
+      "nome": "tests",
+      "email": "test@gmail.com",
+      "senha": "2ad77098",
+      "dataCadastro": "2025-11-25T17:44:40.291Z",
       "admin": false
     }
   ],
@@ -27,10 +35,7 @@
       "descricao": "Rex é um cachorro muito carinhoso e brincalhão. Adora passear e brincar com crianças. É muito obediente e já está castrado e vacinado.",
       "local": "São Paulo - SP",
       "contato": "(11) 98765-4321",
-      "imagem": "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=400&fit=crop",
-      "usuarioId": 1,
-      "disponivel": true,
-      "dataCadastro": "2025-11-24T00:00:00.000Z"
+      "imagem": "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=400&fit=crop"
     },
     {
       "id": 2,
@@ -41,10 +46,7 @@
       "descricao": "Mimi é uma gatinha muito dócil e carinhosa. Adora carinho e é muito tranquila. Ideal para apartamento, já castrada e vacinada.",
       "local": "Rio de Janeiro - RJ",
       "contato": "(21) 99876-5432",
-      "imagem": "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=400&fit=crop",
-      "usuarioId": 1,
-      "disponivel": true,
-      "dataCadastro": "2025-11-24T00:00:00.000Z"
+      "imagem": "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=400&fit=crop"
     },
     {
       "id": 3,
@@ -55,10 +57,7 @@
       "descricao": "Thor é um cachorro forte, leal e protetor. Ideal para casas com quintal. Já está castrado, vacinado e vermifugado. Ótimo com crianças.",
       "local": "Belo Horizonte - MG",
       "contato": "(31) 97654-3210",
-      "imagem": "https://images.unsplash.com/photo-1568572933382-74d440642117?w=400&h=400&fit=crop",
-      "usuarioId": 1,
-      "disponivel": true,
-      "dataCadastro": "2025-11-24T00:00:00.000Z"
+      "imagem": "https://images.unsplash.com/photo-1518288774672-b94e808873ff?w=400&h=400&fit=crop"
     },
     {
       "id": 4,
@@ -66,13 +65,10 @@
       "tipo": "Gato",
       "idade": 1,
       "raca": "Vira-lata",
-      "descricao": "Luna é uma gatinha jovem, muito ativa e brincalhona. Adora explorar e é muito curiosa. Perfeita para lares com energia!",
+      "descricao": "Luna é uma gatinha jovem, muito brincalhona e curiosa. Ideal para quem busca um pet ativo e carinhoso.",
       "local": "Curitiba - PR",
       "contato": "(41) 96543-2109",
-      "imagem": "https://images.unsplash.com/photo-1573865526739-10c1dd0c84ab?w=400&h=400&fit=crop",
-      "usuarioId": 1,
-      "disponivel": true,
-      "dataCadastro": "2025-11-24T00:00:00.000Z"
+      "imagem": "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=400&h=400&fit=crop"
     },
     {
       "id": 5,
@@ -83,12 +79,69 @@
       "descricao": "Bob é um cachorro pequeno, ideal para apartamentos. Muito tranquilo e companheiro, perfeito para idosos ou pessoas que buscam um amigo calmo.",
       "local": "Porto Alegre - RS",
       "contato": "(51) 95432-1098",
-      "imagem": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=400&h=400&fit=crop",
-      "usuarioId": 1,
-      "disponivel": true,
-      "dataCadastro": "2025-11-24T00:00:00.000Z"
+      "imagem": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=400&h=400&fit=crop"
     }
   ],
   "adocoes": [],
-  "doacoes": []
+  "doacoes": [
+    {
+      "id": 1,
+      "tipo": "racao",
+      "nome": "Maria Silva",
+      "doador": {
+        "nome": "Maria Silva",
+        "email": "maria@email.com",
+        "telefone": "(11) 98765-4321"
+      },
+      "marca": "Golden",
+      "animalTipo": "cachorro",
+      "quantidade": "15kg",
+      "validade": "2025-12-31",
+      "dataCadastro": "2025-11-20T10:30:00.000Z"
+    },
+    {
+      "id": 2,
+      "tipo": "remedio",
+      "nome": "João Santos",
+      "doador": {
+        "nome": "João Santos",
+        "email": "joao@email.com",
+        "telefone": "(21) 99876-5432"
+      },
+      "marca": "Vermífugo Pet",
+      "tipoRemedio": "Comprimido",
+      "quantidade": "3 caixas",
+      "validade": "2026-06-15",
+      "dataCadastro": "2025-11-21T14:15:00.000Z"
+    },
+    {
+      "id": 3,
+      "tipo": "racao",
+      "nome": "Ana Costa",
+      "doador": {
+        "nome": "Ana Costa",
+        "email": "ana@email.com",
+        "telefone": "(31) 97654-3210"
+      },
+      "marca": "Royal Canin",
+      "animalTipo": "gato",
+      "quantidade": "10kg",
+      "validade": "2025-11-30",
+      "dataCadastro": "2025-11-22T09:45:00.000Z"
+    },
+    {
+      "id": 4,
+      "tipo": "dinheiro",
+      "nome": "Pedro Oliveira",
+      "doador": {
+        "nome": "Pedro Oliveira",
+        "email": "pedro@email.com",
+        "telefone": "(41) 96543-2109"
+      },
+      "valor": "R$ 150,00",
+      "quantidade": "R$ 150,00",
+      "formaPagamento": "pix",
+      "dataCadastro": "2025-11-23T16:20:00.000Z"
+    }
+  ]
 }

@@ -3,6 +3,43 @@
 const API_URL = 'http://localhost:3000';
 
 // ============================================
+// 🛠️ FUNÇÕES AUXILIARES
+// ============================================
+
+/**
+ * Função auxiliar para fazer requisições com tratamento de erro
+ * @param {string} url - URL da requisição
+ * @param {Object} options - Opções do fetch
+ * @returns {Promise<Object>} Dados da resposta
+ */
+async function fetchAPI(url, options = {}) {
+    try {
+        const response = await fetch(url, options);
+        
+        // Verificar se a resposta é JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            const text = await response.text();
+            console.error('Resposta não-JSON:', text);
+            throw new Error('Servidor retornou uma resposta inválida. Verifique se o servidor está rodando.');
+        }
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.erro || data.error || data.mensagem || `Erro na requisição: ${response.status}`);
+        }
+
+        return data;
+    } catch (error) {
+        if (error.message.includes('fetch')) {
+            throw new Error('Não foi possível conectar ao servidor. Verifique se ele está rodando em http://localhost:3000');
+        }
+        throw error;
+    }
+}
+
+// ============================================
 // 👥 ROTAS DE USUÁRIOS
 // ============================================
 
@@ -14,21 +51,13 @@ const API_URL = 'http://localhost:3000';
  */
 async function login(email, senha) {
     try {
-        const response = await fetch(`${API_URL}/login`, {
+        return await fetchAPI(`${API_URL}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ email, senha })
         });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error || 'Erro ao fazer login');
-        }
-
-        return data;
     } catch (error) {
         console.error('Erro no login:', error);
         throw error;
@@ -42,21 +71,13 @@ async function login(email, senha) {
  */
 async function cadastrarUsuario(usuario) {
     try {
-        const response = await fetch(`${API_URL}/usuarios`, {
+        return await fetchAPI(`${API_URL}/usuarios`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(usuario)
         });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error || 'Erro ao cadastrar usuário');
-        }
-
-        return data;
     } catch (error) {
         console.error('Erro ao cadastrar usuário:', error);
         throw error;
@@ -218,21 +239,13 @@ async function buscarPet(id) {
  */
 async function adicionarPet(pet) {
     try {
-        const response = await fetch(`${API_URL}/pets`, {
+        return await fetchAPI(`${API_URL}/pets`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(pet)
         });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error || 'Erro ao adicionar pet');
-        }
-
-        return data.pet;
     } catch (error) {
         console.error('Erro ao adicionar pet:', error);
         throw error;
